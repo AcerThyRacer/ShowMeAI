@@ -1371,6 +1371,8 @@ const SynthwaveXBackground: React.FC = () => {
 /* ═══════════════ SEASONAL BACKGROUND ═══════════════ */
 const SeasonalBackground: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const iRef = useIntensityRef();
+  const shouldPaint = useFrameThrottle(iRef);
 
   useEffect(() => {
     const canvas = canvasRef.current!;
@@ -1381,7 +1383,6 @@ const SeasonalBackground: React.FC = () => {
     resize();
     window.addEventListener('resize', resize);
 
-    // Determine season from month
     const month = new Date().getMonth();
     let season: 'spring' | 'summer' | 'autumn' | 'winter';
     if (month >= 2 && month <= 4) season = 'spring';
@@ -1397,7 +1398,8 @@ const SeasonalBackground: React.FC = () => {
     };
 
     interface Particle { x: number; y: number; size: number; speedY: number; speedX: number; opacity: number; color: string; wobble: number; }
-    const particles: Particle[] = Array.from({ length: 35 }, () => ({
+    const MAX_PARTICLES = 70;
+    const particles: Particle[] = Array.from({ length: MAX_PARTICLES }, () => ({
       x: Math.random() * canvas.width,
       y: Math.random() * canvas.height,
       size: season === 'winter' ? 2 + Math.random() * 3 : 4 + Math.random() * 8,
@@ -1408,25 +1410,39 @@ const SeasonalBackground: React.FC = () => {
       wobble: Math.random() * Math.PI * 2,
     }));
 
-    const draw = (time: number) => {
+    const draw = (now: number) => {
+      animId = requestAnimationFrame(draw);
+      if (!shouldPaint(now)) return;
+      const t = iRef.current / 100;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      for (const p of particles) {
-        p.y += p.speedY;
-        p.wobble += 0.02;
-        p.x += p.speedX + Math.sin(p.wobble) * 0.3;
+      const vis = Math.max(3, (MAX_PARTICLES * t) | 0);
+      for (let i = 0; i < vis; i++) {
+        const p = particles[i];
+        p.y += p.speedY * (0.2 + t * 1.2);
+        p.wobble += 0.02 * (0.3 + t);
+        p.x += p.speedX + Math.sin(p.wobble) * 0.3 * t;
         if (p.y > canvas.height + 20) { p.y = -20; p.x = Math.random() * canvas.width; }
 
-        ctx.globalAlpha = p.opacity;
+        ctx.globalAlpha = p.opacity * (0.3 + t * 0.7);
         ctx.fillStyle = p.color;
 
         if (season === 'winter') {
-          // Snowflakes
           ctx.beginPath();
-          ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+          ctx.arc(p.x, p.y, p.size * (0.5 + t * 0.5), 0, Math.PI * 2);
           ctx.fill();
+          if (t > 0.5) {
+            ctx.globalAlpha = p.opacity * (t - 0.5) * 0.4;
+            const grad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.size * 3);
+            grad.addColorStop(0, p.color);
+            grad.addColorStop(1, 'transparent');
+            ctx.fillStyle = grad;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.size * 3, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = p.color;
+          }
         } else if (season === 'autumn') {
-          // Falling leaves
           ctx.save();
           ctx.translate(p.x, p.y);
           ctx.rotate(p.wobble);
@@ -1435,7 +1451,6 @@ const SeasonalBackground: React.FC = () => {
           ctx.fill();
           ctx.restore();
         } else if (season === 'spring') {
-          // Petals
           ctx.save();
           ctx.translate(p.x, p.y);
           ctx.rotate(p.wobble * 0.5);
@@ -1444,23 +1459,21 @@ const SeasonalBackground: React.FC = () => {
           ctx.fill();
           ctx.restore();
         } else {
-          // Summer sparkles
-          const grad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.size);
+          const grad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.size * (0.5 + t));
           grad.addColorStop(0, p.color);
           grad.addColorStop(1, 'transparent');
           ctx.fillStyle = grad;
           ctx.beginPath();
-          ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+          ctx.arc(p.x, p.y, p.size * (0.5 + t), 0, Math.PI * 2);
           ctx.fill();
         }
       }
 
       ctx.globalAlpha = 1;
-      animId = requestAnimationFrame(draw);
     };
     animId = requestAnimationFrame(draw);
     return () => { cancelAnimationFrame(animId); window.removeEventListener('resize', resize); };
-  }, []);
+  }, [iRef, shouldPaint]);
 
   return <canvas ref={canvasRef} className="fixed inset-0 z-0 pointer-events-none opacity-40" />;
 };

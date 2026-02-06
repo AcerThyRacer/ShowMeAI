@@ -114,7 +114,7 @@ export const MotionSlider: React.FC = () => {
   const trackW = 80; // w-20 = 80px
 
   return (
-    <div className="flex items-center gap-1.5 group" title="Animation amount">
+    <div className="flex items-center gap-1.5 group" title="UI Effects — controls card glow, shimmer, and ambient animations">
       <Minus
         size={13}
         className="opacity-50 group-hover:opacity-80 transition-opacity shrink-0"
@@ -132,7 +132,7 @@ export const MotionSlider: React.FC = () => {
           value={motionLevel}
           onChange={(e) => setMotionLevel(Number(e.target.value))}
           className="intensity-slider absolute inset-0 w-full appearance-none bg-transparent cursor-pointer z-10"
-          aria-label="Animation amount"
+          aria-label="UI effects level"
         />
       </div>
       <Sparkles
@@ -141,6 +141,9 @@ export const MotionSlider: React.FC = () => {
         style={{
           color: 'var(--accent-color)',
           opacity: 0.4 + (motionLevel / 100) * 0.6,
+          filter: motionLevel > 60
+            ? `drop-shadow(0 0 ${(motionLevel / 25) | 0}px var(--accent-color))`
+            : 'none',
         }}
       />
     </div>
