@@ -5,6 +5,8 @@ import { useTheme } from '../context/ThemeContext';
 import { useThemeAnimations } from '../hooks/useThemeAnimations';
 import { aiProviders, aiModels } from '../data/models';
 import { ArrowLeft, ExternalLink, ChevronRight } from 'lucide-react';
+import { ShareButton } from './ShareButton';
+import { FavoriteButton } from './FavoriteButton';
 
 export const ProviderPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -59,6 +61,10 @@ export const ProviderPage: React.FC = () => {
               >
                 {provider.website} <ExternalLink size={14} />
               </a>
+              <div className="flex items-center gap-3 mt-4">
+                <FavoriteButton id={provider.id} name={provider.name} size={22} />
+                <ShareButton title={provider.name} text={`Explore ${provider.name} — ${provider.description}`} />
+              </div>
             </div>
           </div>
 

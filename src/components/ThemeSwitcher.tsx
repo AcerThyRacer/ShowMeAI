@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { useTheme } from '../context/ThemeContext';
-import { Palette, Moon, Sun, Zap, Terminal, Music, Skull, Candy, Cpu, Waves, Sunset, Radio, Type } from 'lucide-react';
+import { Palette, Moon, Sun, Zap, Terminal, Music, Skull, Candy, Cpu, Waves, Sunset, Radio, Type, TreePine, Circle, AudioLines, CalendarDays } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const themes = [
@@ -16,11 +16,15 @@ const themes = [
   { id: 'ocean',      name: 'Ocean',      icon: Waves,    colors: ['#0a192f', '#0ea5e9', '#06b6d4'] },
   { id: 'sunset',     name: 'Sunset',     icon: Sunset,   colors: ['#1a0a00', '#f97316', '#a855f7'] },
   { id: 'retro',      name: 'Retro',      icon: Radio,    colors: ['#1a0025', '#ff2975', '#00f0ff'] },
-  { id: 'minimalist', name: 'Minimal',    icon: Type,     colors: ['#fafafa', '#18181b', '#a1a1aa'] },
+  { id: 'minimalist', name: 'Minimal',    icon: Type,         colors: ['#fafafa', '#18181b', '#a1a1aa'] },
+  { id: 'forest',     name: 'Forest',     icon: TreePine,     colors: ['#0b1a0f', '#22c55e', '#132a18'] },
+  { id: 'monochrome', name: 'Mono',       icon: Circle,       colors: ['#0a0a0a', '#ffffff', '#171717'] },
+  { id: 'synthwavex', name: 'Synthwave X',icon: AudioLines,   colors: ['#0d001a', '#01cdfe', '#ff71ce'] },
+  { id: 'seasonal',   name: 'Seasonal',   icon: CalendarDays, colors: ['#0f0a1a', '#a855f7', '#f472b6'] },
 ];
 
 export const ThemeSwitcher: React.FC = () => {
-  const { theme, setTheme } = useTheme();
+  const { theme, transitionTheme } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -72,7 +76,7 @@ export const ThemeSwitcher: React.FC = () => {
                 <button
                   key={t.id}
                   onClick={() => {
-                    setTheme(t.id as any);
+                    transitionTheme(t.id as any);
                     setIsOpen(false);
                   }}
                   aria-label={`Switch to ${t.name} theme`}

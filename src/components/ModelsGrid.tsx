@@ -6,6 +6,9 @@ import { useThemeAnimations } from '../hooks/useThemeAnimations';
 import { aiModels } from '../data/models';
 import { ArrowRight } from 'lucide-react';
 import { RevealCard } from './RevealCard';
+import { TiltCard } from './TiltCard';
+import { FavoriteButton } from './FavoriteButton';
+import { useComparison } from '../context/ComparisonContext';
 
 const categories = [
   { id: 'all', label: 'All Models' },
@@ -40,6 +43,7 @@ function filterModels(cat: string) {
 export const ModelsGrid: React.FC = () => {
   const { theme } = useTheme();
   const { panelVariants, getItemVariants } = useThemeAnimations();
+  const { toggleModel, isSelected } = useComparison();
 
   const [activeCategory, setActiveCategory] = React.useState('all');
 
@@ -103,10 +107,25 @@ export const ModelsGrid: React.FC = () => {
                   key={model.id}
                   variants={getItemVariants(index % 10)}
                 >
+                  <TiltCard className="h-full">
                   <Link
                     to={`/models/${model.id}`}
-                    className="theme-card block h-full p-6 rounded-2xl bg-[var(--secondary-color)]/80 backdrop-blur border border-[var(--accent-color)]/20 hover:border-[var(--accent-color)] transition-all group"
+                    className="theme-card block h-full p-6 rounded-2xl bg-[var(--secondary-color)]/80 backdrop-blur border border-[var(--accent-color)]/20 hover:border-[var(--accent-color)] transition-all group relative"
                   >
+                    <div className="absolute top-4 right-4 flex items-center gap-1" onClick={e => e.preventDefault()}>
+                      <FavoriteButton id={model.id} name={model.name} size={16} />
+                      <button
+                        onClick={(e) => { e.preventDefault(); toggleModel(model.id); }}
+                        className={`p-1.5 rounded-lg transition-all text-xs ${
+                          isSelected(model.id)
+                            ? 'bg-[var(--accent-color)] text-white'
+                            : 'opacity-30 hover:opacity-70 hover:bg-[var(--accent-color)]/10'
+                        }`}
+                        title="Add to comparison"
+                      >
+                        ⚖️
+                      </button>
+                    </div>
                     <div className="flex items-start gap-4 mb-4">
                       <span className="text-4xl">{model.icon}</span>
                       <div className="flex-1">
@@ -134,6 +153,7 @@ export const ModelsGrid: React.FC = () => {
                       Read full essay <ArrowRight size={14} className="ml-1" />
                     </div>
                   </Link>
+                  </TiltCard>
                 </RevealCard>
               ))}
             </AnimatePresence>

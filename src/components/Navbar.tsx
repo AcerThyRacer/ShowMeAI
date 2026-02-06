@@ -4,22 +4,28 @@ import { useTheme } from '../context/ThemeContext';
 import { ThemeSwitcher } from './ThemeSwitcher';
 import { IntensitySlider } from './IntensitySlider';
 import { MotionSlider } from './MotionSlider';
-import { Bot, Menu, X } from 'lucide-react';
+import { Bot, Menu, X, Heart } from 'lucide-react';
+import { useFavorites } from '../context/FavoritesContext';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export const Navbar: React.FC = () => {
   const { theme } = useTheme();
   const location = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const { favoritesCount } = useFavorites();
 
   const links = [
     { to: '/', label: 'Home' },
-    { to: '/models', label: 'AI Models' },
+    { to: '/models', label: 'Models' },
     { to: '/providers', label: 'Providers' },
     { to: '/compare', label: 'Compare' },
+    { to: '/prompt-library', label: '✨ Prompts' },
     { to: '/playground', label: 'Playground' },
-    { to: '/prompt-library', label: 'Prompt Library' },
-    { to: '/ai-guide', label: 'AI Guide' },
+    { to: '/ai-guide', label: 'Guide' },
+    { to: '/pricing', label: 'Pricing' },
+    { to: '/search', label: 'Search' },
+    { to: '/wizard', label: 'Wizard' },
+    { to: '/customize', label: '🎨 Customize' },
   ];
 
   const isActive = (path: string) => location.pathname === path;
@@ -35,21 +41,33 @@ export const Navbar: React.FC = () => {
         </Link>
 
         {/* Desktop links */}
-        <div className="hidden md:flex items-center gap-1">
+        <div className="hidden lg:flex items-center gap-0.5">
           {links.map((link) => (
             <Link
               key={link.to}
               to={link.to}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+              className={`px-3 py-1.5 rounded-lg text-[13px] font-medium transition-all whitespace-nowrap ${
                 isActive(link.to)
-                  ? 'bg-[var(--accent-color)] text-white'
-                  : 'hover:bg-[var(--secondary-color)] opacity-80 hover:opacity-100'
+                  ? 'bg-[var(--accent-color)] text-white shadow-sm shadow-[var(--accent-color)]/25'
+                  : 'hover:bg-[var(--secondary-color)] opacity-70 hover:opacity-100'
               }`}
             >
               {link.label}
             </Link>
           ))}
           <div className="ml-4 flex items-center gap-3">
+            <Link
+              to="/favorites"
+              className="relative p-2 rounded-lg hover:bg-[var(--accent-color)]/10 transition-colors"
+              aria-label="Favorites"
+            >
+              <Heart size={18} className={favoritesCount > 0 ? 'text-pink-400' : 'opacity-50'} fill={favoritesCount > 0 ? 'currentColor' : 'none'} />
+              {favoritesCount > 0 && (
+                <span className="absolute -top-0.5 -right-0.5 w-4 h-4 rounded-full bg-pink-500 text-white text-[10px] flex items-center justify-center font-bold">
+                  {favoritesCount}
+                </span>
+              )}
+            </Link>
             <IntensitySlider />
             <MotionSlider />
             <ThemeSwitcher />
@@ -57,7 +75,7 @@ export const Navbar: React.FC = () => {
         </div>
 
         {/* Mobile toggle */}
-        <div className="flex md:hidden items-center gap-2">
+        <div className="flex lg:hidden items-center gap-2">
           <MotionSlider />
           <ThemeSwitcher />
           <button onClick={() => setMobileOpen(!mobileOpen)} className="p-2" aria-label={mobileOpen ? 'Close menu' : 'Open menu'} aria-expanded={mobileOpen}>
@@ -72,7 +90,7 @@ export const Navbar: React.FC = () => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden border-t border-[var(--accent-color)]/20 bg-[var(--bg-color)]/95 backdrop-blur-xl"
+            className="lg:hidden border-t border-[var(--accent-color)]/20 bg-[var(--bg-color)]/95 backdrop-blur-xl"
           >
             {links.map((link) => (
               <Link

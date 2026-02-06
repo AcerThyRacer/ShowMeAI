@@ -150,6 +150,42 @@ body {
   font-family: 'Inter', system-ui, sans-serif;
 }
 
+/* Forest Theme 🌲 */
+.theme-forest {
+  --bg-color: #0b1a0f;
+  --text-color: #d4e8d0;
+  --accent-color: #22c55e;
+  --secondary-color: #132a18;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+/* Monochrome Theme ⚫ */
+.theme-monochrome {
+  --bg-color: #0a0a0a;
+  --text-color: #e5e5e5;
+  --accent-color: #ffffff;
+  --secondary-color: #171717;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+/* Synthwave X Theme 🌴 */
+.theme-synthwavex {
+  --bg-color: #0d001a;
+  --text-color: #ff71ce;
+  --accent-color: #01cdfe;
+  --secondary-color: #1a0033;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+/* Seasonal Theme 🎃🎄 */
+.theme-seasonal {
+  --bg-color: #0f0a1a;
+  --text-color: #f0e6ff;
+  --accent-color: #a855f7;
+  --secondary-color: #1a1028;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
 /* Apply theme variables to body when class is on html/body */
 :root[class*="theme-"] body {
   background-color: var(--bg-color);
@@ -320,6 +356,54 @@ body {
   transform: translateY(-4px);
   box-shadow: 0 8px 30px -8px rgba(0,0,0,0.12);
   border-color: #18181b !important;
+}
+
+/* Forest: organic lift with green glow */
+.theme-forest .theme-card {
+  transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 0.5s ease,
+              border-color 0.4s ease;
+}
+.theme-forest .theme-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 35px -8px rgba(34, 197, 94, 0.2), 0 0 20px rgba(34, 197, 94, 0.08);
+  border-color: #22c55e !important;
+}
+
+/* Monochrome: clean invert lift */
+.theme-monochrome .theme-card {
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.3s ease,
+              border-color 0.3s ease;
+}
+.theme-monochrome .theme-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 30px -8px rgba(255, 255, 255, 0.1);
+  border-color: #ffffff !important;
+}
+
+/* Synthwave X: neon burst */
+.theme-synthwavex .theme-card {
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.35s ease,
+              border-color 0.3s ease;
+}
+.theme-synthwavex .theme-card:hover {
+  transform: translateY(-5px) scale(1.01);
+  box-shadow: 0 0 25px rgba(1, 205, 254, 0.3), 0 0 50px rgba(255, 113, 206, 0.15);
+  border-color: #01cdfe !important;
+}
+
+/* Seasonal: mystical glow */
+.theme-seasonal .theme-card {
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.4s ease,
+              border-color 0.3s ease;
+}
+.theme-seasonal .theme-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 35px -8px rgba(168, 85, 247, 0.25), 0 0 20px rgba(168, 85, 247, 0.1);
+  border-color: #a855f7 !important;
 }
 
 /* ─── Theme-specific section reveal accents ─── */
@@ -502,6 +586,64 @@ body {
   opacity: 0.1;
 }
 
+/* Forest: organic gradient */
+.theme-forest .theme-section { position: relative; }
+.theme-forest .theme-section::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 10%;
+  right: 10%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #22c55e, #16a34a, #22c55e, transparent);
+  opacity: 0.3;
+}
+
+/* Monochrome: single dot line */
+.theme-monochrome .theme-section { position: relative; }
+.theme-monochrome .theme-section::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 25%;
+  right: 25%;
+  height: 1px;
+  background: #fff;
+  opacity: 0.1;
+}
+
+/* Synthwave X: dual neon line */
+.theme-synthwavex .theme-section { position: relative; }
+.theme-synthwavex .theme-section::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 5%;
+  right: 5%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #01cdfe, #ff71ce, #01cdfe, transparent);
+  background-size: 200% 100%;
+  animation: synthwave-line 3s ease infinite;
+  opacity: 0.5;
+}
+@keyframes synthwave-line {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+/* Seasonal: glowing line */
+.theme-seasonal .theme-section { position: relative; }
+.theme-seasonal .theme-section::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 10%;
+  right: 10%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #a855f7, #f472b6, #a855f7, transparent);
+  opacity: 0.3;
+}
+
 /* ─── Per-theme scrollbar colors ─── */
 
 /* Custom Scrollbar */
@@ -568,6 +710,10 @@ body {
 .theme-sunset::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #f97316, #a855f7); }
 .theme-retro::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #ff2975, #00f0ff); }
 .theme-minimalist::-webkit-scrollbar-thumb { background: #a1a1aa; }
+.theme-forest::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #22c55e, #16a34a); }
+.theme-monochrome::-webkit-scrollbar-thumb { background: #555; }
+.theme-synthwavex::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #01cdfe, #ff71ce); }
+.theme-seasonal::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #a855f7, #f472b6); }
 
 /* ─── Per-theme text selection ─── */
 .theme-dark ::selection { background: #3b82f6; color: #fff; }
@@ -582,3 +728,50 @@ body {
 .theme-sunset ::selection { background: #f97316; color: #fff; }
 .theme-retro ::selection { background: #ff2975; color: #fff; }
 .theme-minimalist ::selection { background: #18181b; color: #fff; }
+.theme-forest ::selection { background: #22c55e; color: #000; }
+.theme-monochrome ::selection { background: #fff; color: #000; }
+.theme-synthwavex ::selection { background: #01cdfe; color: #000; }
+.theme-seasonal ::selection { background: #a855f7; color: #fff; }
+
+/* ─── Skeleton Animations ─── */
+@keyframes skeleton-shimmer {
+  0% { opacity: 0.3; }
+  50% { opacity: 0.6; }
+  100% { opacity: 0.3; }
+}
+@keyframes skeleton-scan {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+@keyframes skeleton-rainbow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.skeleton-default {
+  animation: skeleton-shimmer 1.5s ease-in-out infinite;
+}
+.skeleton-hacker {
+  background: linear-gradient(90deg, transparent 0%, rgba(0,255,0,0.08) 50%, transparent 100%);
+  background-size: 200% 100%;
+  animation: skeleton-scan 1.5s linear infinite;
+}
+.skeleton-rave {
+  background: linear-gradient(90deg, rgba(255,0,255,0.05), rgba(0,255,255,0.05), rgba(255,255,0,0.05), rgba(255,0,255,0.05));
+  background-size: 300% 100%;
+  animation: skeleton-rainbow 2s ease infinite;
+}
+.skeleton-neon {
+  background: linear-gradient(90deg, transparent 0%, rgba(217,70,239,0.08) 50%, transparent 100%);
+  background-size: 200% 100%;
+  animation: skeleton-scan 1.8s linear infinite;
+}
+
+/* ─── Theme Transition ─── */
+@keyframes theme-fade {
+  0% { opacity: 0; }
+  40% { opacity: 0.6; }
+  60% { opacity: 0.6; }
+  100% { opacity: 0; }
+}

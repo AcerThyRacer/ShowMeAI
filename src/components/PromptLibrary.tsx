@@ -73,21 +73,21 @@ const CopyButton: React.FC<{ text: string }> = ({ text }) => {
   return (
     <button
       onClick={handleCopy}
-      className={`inline-flex items-center justify-center gap-2 rounded-xl font-semibold text-sm px-5 py-3 transition-all duration-200 w-full ${
+      className={`inline-flex items-center justify-center gap-2 rounded-xl font-bold text-sm px-5 py-3.5 transition-all duration-200 w-full ${
         copied
-          ? 'bg-green-500/20 text-green-400 border border-green-500/40'
-          : 'bg-[var(--accent-color)] text-white hover:brightness-110 hover:scale-[1.02] active:scale-[0.98]'
+          ? 'bg-green-500/20 text-green-400 border-2 border-green-500/40 scale-[0.98]'
+          : 'bg-[var(--accent-color)] text-white hover:brightness-110 hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-[var(--accent-color)]/25'
       }`}
     >
       {copied ? (
         <>
           <Check size={18} />
-          <span>✅ Copied!</span>
+          <span>Copied to clipboard!</span>
         </>
       ) : (
         <>
           <Copy size={18} />
-          <span>📋 Copy Prompt</span>
+          <span>Copy Prompt</span>
         </>
       )}
     </button>
@@ -98,6 +98,7 @@ const CopyButton: React.FC<{ text: string }> = ({ text }) => {
 const PromptCard: React.FC<{ prompt: PromptTemplate; index: number }> = ({ prompt, index }) => {
   const { getItemVariants } = useThemeAnimations();
   const category = PROMPT_CATEGORIES.find(c => c.id === prompt.categoryId);
+  const [expanded, setExpanded] = useState(false);
 
   return (
     <motion.div
@@ -105,23 +106,25 @@ const PromptCard: React.FC<{ prompt: PromptTemplate; index: number }> = ({ promp
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, margin: '-30px' }}
-      className="rounded-2xl border border-[var(--accent-color)]/15 overflow-hidden bg-[var(--secondary-color)]/30 hover:border-[var(--accent-color)]/50 hover:shadow-lg hover:shadow-[var(--accent-color)]/5 transition-all duration-300 flex flex-col"
+      className="rounded-2xl border border-[var(--accent-color)]/15 overflow-hidden bg-[var(--secondary-color)]/30 hover:border-[var(--accent-color)]/40 hover:shadow-lg hover:shadow-[var(--accent-color)]/5 transition-all duration-300 flex flex-col"
     >
       {/* Card Header */}
       <div className="p-5 pb-3">
-        <div className="flex items-center gap-2.5 mb-2">
+        <div className="flex items-start gap-2.5 mb-2">
           {category && (
             <div
-              className="p-1.5 rounded-lg shrink-0"
+              className="p-1.5 rounded-lg shrink-0 mt-0.5"
               style={{ backgroundColor: `${category.color}20`, color: category.color }}
             >
               <CategoryIcon name={category.icon} size={16} />
             </div>
           )}
-          <h3 className="font-bold text-base text-[var(--text-color)] leading-tight">{prompt.title}</h3>
+          <div className="flex-1 min-w-0">
+            <h3 className="font-bold text-base text-[var(--text-color)] leading-tight">{prompt.title}</h3>
+            <p className="text-sm opacity-60 leading-relaxed mt-1">{prompt.description}</p>
+          </div>
         </div>
-        <p className="text-sm opacity-60 leading-relaxed mb-3">{prompt.description}</p>
-        <div className="flex flex-wrap gap-1.5">
+        <div className="flex flex-wrap gap-1.5 mt-2">
           {prompt.tags.map(tag => (
             <span
               key={tag}
@@ -135,9 +138,23 @@ const PromptCard: React.FC<{ prompt: PromptTemplate; index: number }> = ({ promp
 
       {/* Template Block */}
       <div className="px-5 pb-3 flex-1">
-        <pre className="text-[13px] leading-relaxed whitespace-pre-wrap font-mono bg-[var(--bg-color)]/60 p-4 rounded-xl border border-[var(--accent-color)]/10 max-h-64 overflow-y-auto">
-          <HighlightedTemplate text={prompt.template} />
-        </pre>
+        <div className="relative">
+          <pre
+            className={`text-[13px] leading-relaxed whitespace-pre-wrap font-mono bg-[var(--bg-color)]/60 p-4 rounded-xl border border-[var(--accent-color)]/10 overflow-y-auto transition-all duration-300 ${
+              expanded ? 'max-h-[600px]' : 'max-h-48'
+            }`}
+          >
+            <HighlightedTemplate text={prompt.template} />
+          </pre>
+          {prompt.template.length > 400 && (
+            <button
+              onClick={() => setExpanded(!expanded)}
+              className="mt-2 text-xs text-[var(--accent-color)] hover:underline font-medium"
+            >
+              {expanded ? '▲ Show less' : '▼ Show full prompt'}
+            </button>
+          )}
+        </div>
       </div>
 
       {/* Copy Button */}
@@ -202,8 +219,8 @@ export const PromptLibrary: React.FC = () => {
           >
             Prompt <span className="text-[var(--accent-color)]">Library</span>
           </h1>
-          <p className="text-lg opacity-60 max-w-xl mx-auto">
-            Pro-level prompts. Copy. Paste. Get amazing results.
+          <p className="text-lg opacity-60 max-w-2xl mx-auto">
+            Battle-tested prompts that get incredible results. Just copy, paste into any AI, and fill in the <span className="text-[var(--accent-color)] font-medium">[brackets]</span>.
           </p>
         </motion.div>
 

@@ -242,6 +242,62 @@ const motionMap: Record<string, () => ThemeMotion> = {
   sunset: sunsetMotion,
   retro: retroMotion,
   minimalist: minimalistMotion,
+  forest: () => ({
+    container: {
+      hidden: { opacity: 0 },
+      visible: { opacity: 1, transition: { staggerChildren: 0.08, delayChildren: 0.1 } },
+    },
+    panel: {
+      hidden: { opacity: 0, y: 20 },
+      visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
+      exit: { opacity: 0, y: -10, transition: { duration: 0.3 } },
+    },
+    staggerStep: 0.08,
+    childTransition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
+    itemYMax: 20,
+  }),
+  monochrome: () => ({
+    container: {
+      hidden: { opacity: 0 },
+      visible: { opacity: 1, transition: { staggerChildren: 0.04, delayChildren: 0.05 } },
+    },
+    panel: {
+      hidden: { opacity: 0 },
+      visible: { opacity: 1, transition: { duration: 0.3, ease: 'linear' } },
+      exit: { opacity: 0, transition: { duration: 0.15 } },
+    },
+    staggerStep: 0.04,
+    childTransition: { duration: 0.3, ease: 'linear' },
+    itemYMax: 10,
+  }),
+  synthwavex: () => ({
+    container: {
+      hidden: { opacity: 0 },
+      visible: { opacity: 1, transition: { staggerChildren: 0.07, delayChildren: 0.15 } },
+    },
+    panel: {
+      hidden: { opacity: 0, scale: 0.95, y: 30 },
+      visible: { opacity: 1, scale: 1, y: 0, transition: { duration: 0.5, ease: [0.34, 1.56, 0.64, 1] } },
+      exit: { opacity: 0, scale: 0.9, transition: { duration: 0.2 } },
+    },
+    staggerStep: 0.07,
+    childTransition: { duration: 0.4, ease: [0.34, 1.56, 0.64, 1] },
+    itemYMax: 28,
+  }),
+  seasonal: () => ({
+    container: {
+      hidden: { opacity: 0 },
+      visible: { opacity: 1, transition: { staggerChildren: 0.06, delayChildren: 0.1 } },
+    },
+    panel: {
+      hidden: { opacity: 0, y: 15 },
+      visible: { opacity: 1, y: 0, transition: { duration: 0.45, ease: [0.22, 1, 0.36, 1] } },
+      exit: { opacity: 0, transition: { duration: 0.2 } },
+    },
+    staggerStep: 0.06,
+    childTransition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] },
+    itemYMax: 18,
+  }),
 };
 
 export function useThemeAnimations() {

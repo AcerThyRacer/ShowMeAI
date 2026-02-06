@@ -1097,6 +1097,341 @@ const MinimalistBackground: React.FC = () => {
   return <canvas ref={canvasRef} className="fixed inset-0 z-0 pointer-events-none opacity-30" />;
 };
 
+/* ═══════════════ FOREST BACKGROUND ═══════════════ */
+const ForestBackground: React.FC = () => {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current!;
+    const ctx = canvas.getContext('2d')!;
+    let animId: number;
+
+    const resize = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; };
+    resize();
+    window.addEventListener('resize', resize);
+
+    interface Leaf { x: number; y: number; size: number; rotation: number; rotSpeed: number; speedY: number; speedX: number; opacity: number; color: string; }
+    interface Firefly { x: number; y: number; radius: number; opacity: number; phase: number; speed: number; }
+
+    const leafColors = ['#22c55e', '#16a34a', '#15803d', '#4ade80', '#86efac'];
+    const leaves: Leaf[] = Array.from({ length: 25 }, () => ({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height - canvas.height,
+      size: 6 + Math.random() * 10,
+      rotation: Math.random() * Math.PI * 2,
+      rotSpeed: (Math.random() - 0.5) * 0.03,
+      speedY: 0.3 + Math.random() * 0.7,
+      speedX: (Math.random() - 0.5) * 0.5,
+      opacity: 0.2 + Math.random() * 0.4,
+      color: leafColors[Math.floor(Math.random() * leafColors.length)],
+    }));
+
+    const fireflies: Firefly[] = Array.from({ length: 30 }, () => ({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      radius: 1 + Math.random() * 2,
+      opacity: 0,
+      phase: Math.random() * Math.PI * 2,
+      speed: 0.2 + Math.random() * 0.5,
+    }));
+
+    const draw = (time: number) => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Leaves
+      for (const l of leaves) {
+        l.y += l.speedY;
+        l.x += l.speedX + Math.sin(time * 0.001 + l.rotation) * 0.3;
+        l.rotation += l.rotSpeed;
+        if (l.y > canvas.height + 20) { l.y = -20; l.x = Math.random() * canvas.width; }
+
+        ctx.save();
+        ctx.translate(l.x, l.y);
+        ctx.rotate(l.rotation);
+        ctx.globalAlpha = l.opacity;
+        ctx.fillStyle = l.color;
+        ctx.beginPath();
+        ctx.ellipse(0, 0, l.size * 0.4, l.size, 0, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      }
+
+      // Fireflies
+      for (const f of fireflies) {
+        f.phase += 0.015;
+        f.opacity = 0.1 + Math.abs(Math.sin(f.phase)) * 0.6;
+        f.x += Math.sin(f.phase * 0.7) * f.speed;
+        f.y += Math.cos(f.phase * 0.5) * f.speed * 0.5;
+        if (f.x < 0) f.x = canvas.width;
+        if (f.x > canvas.width) f.x = 0;
+        if (f.y < 0) f.y = canvas.height;
+        if (f.y > canvas.height) f.y = 0;
+
+        ctx.globalAlpha = f.opacity;
+        const grad = ctx.createRadialGradient(f.x, f.y, 0, f.x, f.y, f.radius * 4);
+        grad.addColorStop(0, '#4ade80');
+        grad.addColorStop(1, 'transparent');
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        ctx.arc(f.x, f.y, f.radius * 4, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      ctx.globalAlpha = 1;
+      animId = requestAnimationFrame(draw);
+    };
+    animId = requestAnimationFrame(draw);
+    return () => { cancelAnimationFrame(animId); window.removeEventListener('resize', resize); };
+  }, []);
+
+  return <canvas ref={canvasRef} className="fixed inset-0 z-0 pointer-events-none opacity-40" />;
+};
+
+/* ═══════════════ MONOCHROME BACKGROUND ═══════════════ */
+const MonochromeBackground: React.FC = () => {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current!;
+    const ctx = canvas.getContext('2d')!;
+    let animId: number;
+
+    const resize = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; };
+    resize();
+    window.addEventListener('resize', resize);
+
+    interface Shape { x: number; y: number; size: number; rotation: number; rotSpeed: number; type: number; opacity: number; speed: number; }
+    const shapes: Shape[] = Array.from({ length: 20 }, () => ({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      size: 15 + Math.random() * 40,
+      rotation: Math.random() * Math.PI * 2,
+      rotSpeed: (Math.random() - 0.5) * 0.005,
+      type: Math.floor(Math.random() * 3),
+      opacity: 0.03 + Math.random() * 0.06,
+      speed: 0.1 + Math.random() * 0.3,
+    }));
+
+    const draw = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      for (const s of shapes) {
+        s.rotation += s.rotSpeed;
+        s.y -= s.speed;
+        if (s.y < -s.size * 2) { s.y = canvas.height + s.size; s.x = Math.random() * canvas.width; }
+
+        ctx.save();
+        ctx.translate(s.x, s.y);
+        ctx.rotate(s.rotation);
+        ctx.globalAlpha = s.opacity;
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = 1;
+
+        if (s.type === 0) {
+          ctx.strokeRect(-s.size / 2, -s.size / 2, s.size, s.size);
+        } else if (s.type === 1) {
+          ctx.beginPath();
+          ctx.arc(0, 0, s.size / 2, 0, Math.PI * 2);
+          ctx.stroke();
+        } else {
+          ctx.beginPath();
+          for (let i = 0; i < 3; i++) {
+            const angle = (i / 3) * Math.PI * 2 - Math.PI / 2;
+            const method = i === 0 ? 'moveTo' : 'lineTo';
+            ctx[method](Math.cos(angle) * s.size / 2, Math.sin(angle) * s.size / 2);
+          }
+          ctx.closePath();
+          ctx.stroke();
+        }
+        ctx.restore();
+      }
+
+      ctx.globalAlpha = 1;
+      animId = requestAnimationFrame(draw);
+    };
+    animId = requestAnimationFrame(draw);
+    return () => { cancelAnimationFrame(animId); window.removeEventListener('resize', resize); };
+  }, []);
+
+  return <canvas ref={canvasRef} className="fixed inset-0 z-0 pointer-events-none opacity-30" />;
+};
+
+/* ═══════════════ SYNTHWAVE X BACKGROUND ═══════════════ */
+const SynthwaveXBackground: React.FC = () => {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current!;
+    const ctx = canvas.getContext('2d')!;
+    let animId: number;
+    let offset = 0;
+
+    const resize = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; };
+    resize();
+    window.addEventListener('resize', resize);
+
+    const draw = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      offset += 0.5;
+
+      const horizon = canvas.height * 0.55;
+      const gridSpacing = 40;
+      const perspectiveDepth = 30;
+
+      // Horizontal grid lines (perspective)
+      ctx.strokeStyle = '#01cdfe';
+      ctx.lineWidth = 1;
+      for (let i = 0; i < perspectiveDepth; i++) {
+        const t = i / perspectiveDepth;
+        const y = horizon + (canvas.height - horizon) * Math.pow(t, 1.5);
+        const alpha = 0.05 + t * 0.15;
+        ctx.globalAlpha = alpha;
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(canvas.width, y);
+        ctx.stroke();
+      }
+
+      // Vertical grid lines (perspective)
+      const vertCount = 20;
+      for (let i = -vertCount; i <= vertCount; i++) {
+        const baseX = canvas.width / 2 + i * gridSpacing;
+        const t = (offset % gridSpacing) / gridSpacing;
+        ctx.globalAlpha = 0.08;
+        ctx.beginPath();
+        ctx.moveTo(canvas.width / 2 + (baseX - canvas.width / 2) * 0.02, horizon);
+        ctx.lineTo(baseX, canvas.height);
+        ctx.stroke();
+      }
+
+      // Sun
+      const sunY = horizon - 40;
+      const sunR = 60;
+      const sunGrad = ctx.createRadialGradient(canvas.width / 2, sunY, 0, canvas.width / 2, sunY, sunR * 2);
+      sunGrad.addColorStop(0, 'rgba(255,113,206,0.3)');
+      sunGrad.addColorStop(0.5, 'rgba(1,205,254,0.1)');
+      sunGrad.addColorStop(1, 'transparent');
+      ctx.globalAlpha = 0.5;
+      ctx.fillStyle = sunGrad;
+      ctx.beginPath();
+      ctx.arc(canvas.width / 2, sunY, sunR * 2, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Sun horizontal stripes
+      ctx.globalAlpha = 0.4;
+      ctx.fillStyle = '#ff71ce';
+      for (let i = 0; i < 5; i++) {
+        const stripeY = sunY - sunR + i * (sunR * 2 / 5);
+        ctx.fillRect(canvas.width / 2 - sunR, stripeY, sunR * 2, 2);
+      }
+
+      ctx.globalAlpha = 1;
+      animId = requestAnimationFrame(draw);
+    };
+    animId = requestAnimationFrame(draw);
+    return () => { cancelAnimationFrame(animId); window.removeEventListener('resize', resize); };
+  }, []);
+
+  return <canvas ref={canvasRef} className="fixed inset-0 z-0 pointer-events-none opacity-50" />;
+};
+
+/* ═══════════════ SEASONAL BACKGROUND ═══════════════ */
+const SeasonalBackground: React.FC = () => {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current!;
+    const ctx = canvas.getContext('2d')!;
+    let animId: number;
+
+    const resize = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; };
+    resize();
+    window.addEventListener('resize', resize);
+
+    // Determine season from month
+    const month = new Date().getMonth();
+    let season: 'spring' | 'summer' | 'autumn' | 'winter';
+    if (month >= 2 && month <= 4) season = 'spring';
+    else if (month >= 5 && month <= 7) season = 'summer';
+    else if (month >= 8 && month <= 10) season = 'autumn';
+    else season = 'winter';
+
+    const seasonColors: Record<string, string[]> = {
+      spring: ['#f472b6', '#a855f7', '#34d399', '#fbbf24'],
+      summer: ['#fbbf24', '#f97316', '#ef4444', '#fcd34d'],
+      autumn: ['#f97316', '#dc2626', '#a16207', '#eab308'],
+      winter: ['#93c5fd', '#c4b5fd', '#e0e7ff', '#bfdbfe'],
+    };
+
+    interface Particle { x: number; y: number; size: number; speedY: number; speedX: number; opacity: number; color: string; wobble: number; }
+    const particles: Particle[] = Array.from({ length: 35 }, () => ({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      size: season === 'winter' ? 2 + Math.random() * 3 : 4 + Math.random() * 8,
+      speedY: season === 'winter' ? 0.5 + Math.random() * 1 : 0.3 + Math.random() * 0.8,
+      speedX: (Math.random() - 0.5) * 0.5,
+      opacity: 0.15 + Math.random() * 0.35,
+      color: seasonColors[season][Math.floor(Math.random() * seasonColors[season].length)],
+      wobble: Math.random() * Math.PI * 2,
+    }));
+
+    const draw = (time: number) => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      for (const p of particles) {
+        p.y += p.speedY;
+        p.wobble += 0.02;
+        p.x += p.speedX + Math.sin(p.wobble) * 0.3;
+        if (p.y > canvas.height + 20) { p.y = -20; p.x = Math.random() * canvas.width; }
+
+        ctx.globalAlpha = p.opacity;
+        ctx.fillStyle = p.color;
+
+        if (season === 'winter') {
+          // Snowflakes
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+          ctx.fill();
+        } else if (season === 'autumn') {
+          // Falling leaves
+          ctx.save();
+          ctx.translate(p.x, p.y);
+          ctx.rotate(p.wobble);
+          ctx.beginPath();
+          ctx.ellipse(0, 0, p.size * 0.4, p.size, 0, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.restore();
+        } else if (season === 'spring') {
+          // Petals
+          ctx.save();
+          ctx.translate(p.x, p.y);
+          ctx.rotate(p.wobble * 0.5);
+          ctx.beginPath();
+          ctx.ellipse(0, 0, p.size * 0.3, p.size * 0.8, 0, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.restore();
+        } else {
+          // Summer sparkles
+          const grad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.size);
+          grad.addColorStop(0, p.color);
+          grad.addColorStop(1, 'transparent');
+          ctx.fillStyle = grad;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+
+      ctx.globalAlpha = 1;
+      animId = requestAnimationFrame(draw);
+    };
+    animId = requestAnimationFrame(draw);
+    return () => { cancelAnimationFrame(animId); window.removeEventListener('resize', resize); };
+  }, []);
+
+  return <canvas ref={canvasRef} className="fixed inset-0 z-0 pointer-events-none opacity-40" />;
+};
+
 /* ═══════════════ ROUTER ═══════════════ */
 export const ThemeBackground: React.FC = () => {
   const { theme } = useTheme();
@@ -1114,6 +1449,10 @@ export const ThemeBackground: React.FC = () => {
     case 'sunset': return <SunsetBackground />;
     case 'retro': return <RetroBackground />;
     case 'minimalist': return <MinimalistBackground />;
+    case 'forest': return <ForestBackground />;
+    case 'monochrome': return <MonochromeBackground />;
+    case 'synthwavex': return <SynthwaveXBackground />;
+    case 'seasonal': return <SeasonalBackground />;
     default: return <DarkBackground />;
   }
 };

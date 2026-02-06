@@ -5,6 +5,8 @@ import { useTheme } from '../context/ThemeContext';
 import { useThemeAnimations } from '../hooks/useThemeAnimations';
 import { aiModels, aiProviders } from '../data/models';
 import { ArrowLeft, ExternalLink, ChevronRight } from 'lucide-react';
+import { ShareButton } from './ShareButton';
+import { FavoriteButton } from './FavoriteButton';
 
 export const ModelPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -61,6 +63,10 @@ export const ModelPage: React.FC = () => {
                 <span className="text-sm opacity-60">{model.releaseYear}</span>
               </div>
               <p className="text-lg font-medium text-[var(--accent-color)]">{model.tagline}</p>
+              <div className="flex items-center gap-3 mt-4">
+                <FavoriteButton id={model.id} name={model.name} size={22} />
+                <ShareButton title={model.name} text={`Check out ${model.name}: ${model.tagline}`} />
+              </div>
             </div>
           </div>
 
