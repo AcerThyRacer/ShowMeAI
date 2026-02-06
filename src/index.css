@@ -59,6 +59,24 @@ body {
   font-family: 'Courier New', Courier, monospace;
 }
 
+/* Toxic Theme */
+.theme-toxic {
+  --bg-color: #0a0a0a;
+  --text-color: #b8ff00;
+  --accent-color: #9333ea;
+  --secondary-color: #1a1a0d;
+  font-family: 'Trebuchet MS', 'Lucida Sans', sans-serif;
+}
+
+/* Candy Theme */
+.theme-candy {
+  --bg-color: #fdf2f8;
+  --text-color: #4a1942;
+  --accent-color: #ec4899;
+  --secondary-color: #fce7f3;
+  font-family: 'Comic Sans MS', 'Chalkboard SE', sans-serif;
+}
+
 /* Apply theme variables to body when class is on html/body */
 :root[class*="theme-"] body {
   background-color: var(--bg-color);
@@ -81,6 +99,192 @@ body {
   .neon-glow {
     box-shadow: 0 0 10px var(--accent-color), 0 0 20px var(--accent-color);
   }
+}
+
+/* ─── Theme-specific card hover effects ─── */
+
+/* Dark: cool blue uplift glow */
+.theme-dark .theme-card {
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+              border-color 0.35s ease;
+}
+.theme-dark .theme-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 40px -8px rgba(59, 130, 246, 0.25),
+              0 0 0 1px rgba(59, 130, 246, 0.15);
+}
+
+/* Light: soft lift with shadow */
+.theme-light .theme-card {
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+              border-color 0.3s ease;
+}
+.theme-light .theme-card:hover {
+  transform: translateY(-8px) scale(1.01);
+  box-shadow: 0 20px 50px -12px rgba(0, 0, 0, 0.15),
+              0 0 0 1px rgba(37, 99, 235, 0.12);
+}
+
+/* Rave: pulsing neon border glow */
+.theme-rave .theme-card {
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.25s ease,
+              border-color 0.25s ease;
+}
+.theme-rave .theme-card:hover {
+  transform: scale(1.04) rotate(-0.5deg);
+  box-shadow: 0 0 20px #ff00ff88, 0 0 40px #ff00ff44, 0 0 60px #00ffff33,
+              inset 0 0 20px #ff00ff11;
+  border-color: #ff00ff !important;
+}
+
+/* Neon: electric skew glow */
+.theme-neon .theme-card {
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.3s ease;
+}
+.theme-neon .theme-card:hover {
+  transform: translateY(-5px) skewX(-0.5deg);
+  box-shadow: 0 0 15px #d946ef66, 0 8px 30px -6px #d946ef44,
+              0 0 0 1px #d946ef55;
+}
+
+/* Hacker: sharp snap with scanline feel */
+.theme-hacker .theme-card {
+  transition: transform 0.15s linear,
+              box-shadow 0.15s linear,
+              border-color 0.1s linear;
+}
+.theme-hacker .theme-card:hover {
+  transform: translateX(4px);
+  box-shadow: -4px 0 0 0 #00ff00, 0 0 15px #00ff0033;
+  border-color: #00ff00 !important;
+}
+
+/* Toxic: radioactive glow pulse */
+.theme-toxic .theme-card {
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.35s ease,
+              border-color 0.3s ease;
+}
+.theme-toxic .theme-card:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 0 20px #9333ea55, 0 0 40px #b8ff0022, 0 8px 30px -8px #9333ea44;
+  border-color: #9333ea !important;
+}
+
+/* Candy: sweet bounce lift */
+.theme-candy .theme-card {
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 0.4s ease,
+              border-color 0.3s ease;
+}
+.theme-candy .theme-card:hover {
+  transform: translateY(-8px) scale(1.02) rotate(-0.5deg);
+  box-shadow: 0 12px 35px -8px #ec489944, 0 0 0 2px #ec489933;
+  border-color: #ec4899 !important;
+}
+
+/* ─── Theme-specific section reveal accents ─── */
+
+/* Rave: rainbow border-bottom pulse on sections */
+.theme-rave .theme-section {
+  position: relative;
+}
+.theme-rave .theme-section::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 10%;
+  right: 10%;
+  height: 2px;
+  background: linear-gradient(90deg, #ff00ff, #00ffff, #ffff00, #ff00ff);
+  background-size: 200% 100%;
+  animation: rave-border-slide 3s linear infinite;
+  opacity: 0.5;
+  border-radius: 1px;
+}
+
+@keyframes rave-border-slide {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+/* Neon: accent line glow on sections */
+.theme-neon .theme-section {
+  position: relative;
+}
+.theme-neon .theme-section::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 15%;
+  right: 15%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #d946ef, transparent);
+  opacity: 0.4;
+}
+
+/* Hacker: cursor-blink line */
+.theme-hacker .theme-section {
+  position: relative;
+}
+.theme-hacker .theme-section::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 40px;
+  height: 2px;
+  background: #00ff00;
+  animation: hacker-cursor 1s steps(2) infinite;
+}
+
+@keyframes hacker-cursor {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* Toxic: dripping acid gradient */
+.theme-toxic .theme-section {
+  position: relative;
+}
+.theme-toxic .theme-section::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 5%;
+  right: 5%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #b8ff00, #9333ea, #b8ff00, transparent);
+  opacity: 0.4;
+  border-radius: 1px;
+}
+
+/* Candy: sparkle line */
+.theme-candy .theme-section {
+  position: relative;
+}
+.theme-candy .theme-section::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 10%;
+  right: 10%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #ec4899, #f472b6, #a855f7, #ec4899, transparent);
+  background-size: 200% 100%;
+  animation: candy-shimmer 4s ease infinite;
+  opacity: 0.5;
+  border-radius: 1px;
+}
+
+@keyframes candy-shimmer {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
 }
 
 /* Custom Scrollbar */

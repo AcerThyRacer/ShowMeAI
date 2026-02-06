@@ -27,51 +27,57 @@ export interface AIProvider {
 export const aiModels: AIModel[] = [
   {
     id: 'gpt-5',
-    name: 'GPT-5.2',
+    name: 'GPT-5.3 Codex',
     provider: 'OpenAI',
     providerSlug: 'openai',
     category: ['text', 'coding', 'reasoning', 'multimodal'],
-    tagline: 'The most versatile AI model of 2026',
-    description: 'OpenAI\'s flagship model with up to 2 million token context, multimodal input/output, and frontier-level reasoning.',
-    essay: `GPT-5.2 represents the culmination of OpenAI's relentless pursuit of artificial general intelligence. Released in early 2026, it builds upon the revolutionary foundation laid by GPT-4 and GPT-5, pushing the boundaries of what language models can achieve across virtually every domain.
+    tagline: 'The self-improving agentic coding powerhouse',
+    description: 'OpenAI\'s flagship coding model — 25% faster, 400K token context, agentic collaboration, and the first AI model instrumental in building itself. Released February 5, 2026.',
+    essay: `GPT-5.3 Codex is not just another model update — it's a paradigm shift. Released on February 5, 2026, it is the first OpenAI model that was instrumental in creating itself, with early iterations helping to debug and develop the final release. This self-improving capability signals a new era in AI development.
 
-What sets GPT-5.2 apart is its unprecedented context window of up to 2 million tokens — enough to process entire codebases, lengthy legal documents, or vast research corpora in a single conversation. This massive context window, combined with dramatically improved reasoning capabilities, allows GPT-5.2 to maintain coherent, nuanced understanding across extraordinarily long interactions.
+The model is built from the ground up for agentic collaboration. Unlike previous models that passively respond to prompts, GPT-5.3 Codex functions as an interactive teammate. You can steer and guide it mid-task, making dynamic adjustments and clarifications as it works — all while it maintains full context of the project.
 
-The model's multimodal capabilities have matured significantly. GPT-5.2 can seamlessly process and generate text, images, audio, and even limited video content. Its image understanding rivals dedicated vision models, while its text generation remains the gold standard for fluency, creativity, and factual accuracy.
+Its capabilities extend far beyond code generation. GPT-5.3 Codex handles the entire software lifecycle: debugging, deployment, documentation, project management, data analysis, and even creating slide decks and spreadsheets. It achieved 56.8% on SWE-Bench Pro, 77.3% on Terminal-Bench 2.0, and a remarkable 64.7% on OSWorld — simulating real user computer tasks.
 
-In coding tasks, GPT-5.2 excels at understanding complex architectures, debugging intricate issues, and generating production-ready code across dozens of programming languages. Its integration with the Codex series means it can handle everything from quick scripts to multi-file refactoring with remarkable precision.
+The 400,000-token context window and 128,000-token output limit allow it to manage extensive, complex projects in a single session. While not as wide as Claude Opus 4.6's million-token window, GPT-5.3 Codex is highly optimized for structured, code-centric workflows where efficiency matters more than raw context size.
 
-However, GPT-5.2 is not without its limitations. At higher usage tiers, costs can become significant for enterprises processing millions of tokens daily. The model occasionally exhibits verbose "looping" behavior on particularly challenging prompts, and like all large language models, it can still hallucinate — though at significantly reduced rates compared to its predecessors.
+Speed improvements are significant — 25% faster inference than its predecessor, with optimizations for lower latency and cost per output. The model's tool integration capabilities have also leaped forward, with seamless integration of third-party APIs, terminals, and development tools.
 
-For professionals and enterprises seeking the most capable all-around AI model available in 2026, GPT-5.2 remains the benchmark against which all others are measured. Its combination of reasoning depth, multimodal fluency, and massive context makes it the Swiss Army knife of the AI world.`,
-    strengths: ['2M token context window', 'Best-in-class multimodal', 'Superior reasoning', 'Excellent code generation', 'Wide language support'],
-    weaknesses: ['Expensive at scale', 'Occasional verbose looping', 'Can still hallucinate'],
-    pricing: '$20–$200/month depending on tier',
+For developers, GPT-5.3 Codex is available across the Codex app (including a dedicated macOS app), CLI, IDE extensions, and web interface. Its cybersecurity rating of "High" and enhanced safety controls make it suitable for enterprise environments where security is non-negotiable.
+
+GPT-5.3 Codex represents a future where AI doesn't just assist with coding — it collaborates, iterates, and improves alongside you. It's the most capable agentic coding model OpenAI has ever built.`,
+    strengths: ['Self-improving architecture', '25% faster inference', 'Agentic collaboration', '400K context / 128K output', 'Full lifecycle dev support'],
+    weaknesses: ['Smaller context than Claude Opus 4.6', 'Premium pricing', 'API access rolling out gradually'],
+    pricing: 'ChatGPT Plus/Pro/Enterprise; API pricing TBA',
     releaseYear: 2026,
     icon: '🧠'
   },
   {
     id: 'claude-opus-4',
-    name: 'Claude Opus 4.5',
+    name: 'Claude Opus 4.6',
     provider: 'Anthropic',
     providerSlug: 'anthropic',
     category: ['text', 'coding', 'reasoning'],
-    tagline: 'The thinking developer\'s AI companion',
-    description: 'Anthropic\'s most powerful model, excelling at long-context reasoning, complex coding tasks, and safety-aligned outputs.',
-    essay: `Claude Opus 4.5 from Anthropic has established itself as the preferred AI model for software engineers, researchers, and anyone who demands meticulous reasoning and safety-conscious outputs. In the fiercely competitive landscape of 2026, Claude Opus has carved out a distinctive niche that sets it apart from every competitor.
+    tagline: 'The benchmark-crushing agent team leader',
+    description: 'Anthropic\'s most powerful model ever — 1M token context, collaborative agent teams, and state-of-the-art scores on coding, research, and knowledge work benchmarks. Released February 5, 2026.',
+    essay: `Claude Opus 4.6 arrived on February 5, 2026, and immediately rewrote the competitive landscape. Released the same day as OpenAI's GPT-5.3 Codex, it delivered the kind of across-the-board improvements that don't just iterate — they leapfrog.
 
-The model's defining characteristic is its extraordinary ability to reason through complex, multi-step problems with a level of thoroughness that consistently impresses even seasoned AI researchers. When given a challenging coding task — say, refactoring a legacy codebase or debugging a subtle race condition — Claude Opus doesn't just provide an answer. It walks through its reasoning, considers edge cases, and often catches issues that other models miss entirely.
+The headline feature is a 1 million token context window, currently in beta. This allows Opus 4.6 to process and reason across entire books, massive codebases, sprawling legal archives, or years of corporate documentation without losing track of a single detail. It's not just about fitting more text — it's about maintaining coherent, nuanced reasoning across extraordinarily long interactions.
 
-With a 200,000-token context window, Claude Opus 4.5 can ingest and reason about substantial codebases, lengthy academic papers, and complex documentation all at once. While this is smaller than GPT-5.2's 2M tokens, Anthropic has optimized how Claude utilizes every token of context, resulting in remarkably accurate recall and reasoning even at the edges of its window.
+But the truly revolutionary feature is "Agent Teams." Within Claude Code, multiple AI agents can now collaborate on a single task in parallel, splitting complex work like a coordinated department rather than a single overworked assistant. This dramatically improves throughput for large coding projects, research tasks, and enterprise knowledge work.
 
-What truly distinguishes Claude Opus is Anthropic's "Constitutional AI" approach to safety. The model is designed to be helpful, harmless, and honest — a philosophy that translates into outputs that are notably more measured and responsible than many competitors. For enterprises in regulated industries like healthcare, finance, and legal services, this safety-first approach is not just a feature — it's a requirement.
+The benchmark results speak for themselves: 65.4% on Terminal-Bench 2.0 (agentic coding), 80.8% on SWE-bench Verified, 72.7% on OSWorld (computer use), and 84% on BrowseComp (deep research). These scores surpass both GPT-5.2 and Gemini 3 Pro on virtually every professional and coding benchmark.
 
-Claude Opus 4.5 particularly shines in collaborative coding workflows. Its ability to understand complex project structures, maintain consistency across multi-file changes, and explain its reasoning makes it feel less like a tool and more like a thoughtful senior colleague reviewing your work.
+In pre-release testing, Opus 4.6 discovered over 500 previously unknown security vulnerabilities in open-source code — a stunning demonstration of its ability to reason about code at a depth that goes beyond surface-level analysis. This has massive implications for software security auditing.
 
-The model's primary limitation is speed — its thoroughness comes at the cost of slightly longer response times compared to lighter models. Additionally, premium API pricing can be steep for high-volume applications. But for tasks where accuracy, safety, and depth of reasoning matter most, Claude Opus 4.5 is the undisputed champion of 2026.`,
-    strengths: ['Best-in-class coding ability', 'Exceptional reasoning depth', '200K context window', 'Safety-aligned outputs', 'Excellent at planning'],
-    weaknesses: ['Slower response times', 'Premium API pricing', 'Smaller context than GPT-5.2'],
-    pricing: '$17–$20/month Pro plan; free Sonnet tier',
+New integrations include Claude in Excel (pivot tables, conditional formatting), a direct Claude in PowerPoint add-in, and advanced workplace automation through Claude Cowork. The Adaptive Thinking feature lets developers or the model itself decide how much reasoning depth to apply, balancing speed, intelligence, and cost.
+
+Pricing remains at $5 per million input tokens and $25 per million output tokens — unchanged from Opus 4.5 despite the massive capability improvements. For contexts exceeding 200,000 tokens, premium pricing applies.
+
+Claude Opus 4.6 is the new gold standard for demanding, real-world AI work. It's not just the best coding model — it's the best knowledge work model, period.`,
+    strengths: ['1M token context window', 'Agent Teams for parallel work', 'Best coding benchmarks (65.4% Terminal-Bench)', '500+ vulnerabilities found in testing', 'Adaptive Thinking mode'],
+    weaknesses: ['Premium pricing for >200K context', 'Agent teams in beta', 'Slightly slower than GPT-5.3 Codex'],
+    pricing: '$5/M input tokens, $25/M output tokens',
     releaseYear: 2026,
     icon: '🎯'
   },
@@ -104,12 +110,12 @@ For users who live in the Google ecosystem or need the fastest, most capable mul
   },
   {
     id: 'grok-4',
-    name: 'Grok 4',
+    name: 'Grok 4.1',
     provider: 'xAI',
     providerSlug: 'xai',
     category: ['text', 'reasoning', 'research'],
-    tagline: 'Real-time intelligence meets frontier reasoning',
-    description: 'xAI\'s flagship model with DeepChain reasoning, real-time web access, and unmatched performance on reasoning benchmarks.',
+    tagline: 'Human-like reasoning with real-time intelligence',
+    description: 'xAI\'s most advanced model with enhanced DeepChain reasoning, native tool use, enterprise "Heavy" variant, and the most human-like conversational AI available.',
     essay: `Grok 4 is the flagship AI model from Elon Musk's xAI, and it has quickly become one of the most talked-about models of 2026 — not just for its technical capabilities, but for its fundamentally different philosophy toward AI interaction.
 
 The model's standout feature is "DeepChain" reasoning — a multi-step approach where Grok breaks complex queries into logical sub-steps, reasoning through each one before synthesizing a final answer. This approach has yielded extraordinary results on benchmarks, with Grok 4 achieving approximately 44.4% on the notoriously difficult "Humanity's Last Exam" benchmark — one of the highest scores ever recorded by any language model.
@@ -123,8 +129,8 @@ Grok 4 introduces a collaborative multi-agent architecture where multiple specia
 The model's personality is notably more direct and less filtered than competitors like Claude, which some users appreciate for its honesty and others find occasionally too blunt. xAI's philosophy of minimal content filtering means Grok will engage with topics that other models might deflect.
 
 For professionals who need real-time intelligence, frontier-level reasoning, and a model that doesn't pull punches, Grok 4 represents a compelling and increasingly mature choice in the 2026 AI landscape.`,
-    strengths: ['DeepChain reasoning', 'Real-time web/X data', 'Top benchmark scores', 'Financial analysis', 'Multi-agent architecture'],
-    weaknesses: ['Less content filtering', 'Smaller ecosystem', 'Premium pricing'],
+    strengths: ['DeepChain reasoning', 'Real-time web/X data', 'Top benchmark scores', 'Human-like conversation', 'Enterprise Heavy variant'],
+    weaknesses: ['Less content filtering', 'Premium pricing tiers', 'Grok 5 looming'],
     pricing: 'SuperGrok/Premium+ tiers required',
     releaseYear: 2026,
     icon: '⚡'
@@ -158,12 +164,12 @@ Despite these limitations, DeepSeek V3/R1 has fundamentally democratized access 
   },
   {
     id: 'llama-4',
-    name: 'Llama 4',
+    name: 'Llama 4 Maverick',
     provider: 'Meta',
     providerSlug: 'meta',
     category: ['text', 'coding', 'open-source'],
-    tagline: 'The open-source AI revolution',
-    description: 'Meta\'s leading open-source model for enterprise self-hosting, customization, and privacy-first deployments.',
+    tagline: 'The open-source frontier model',
+    description: 'Meta\'s latest and most capable open-source model with expanded context windows, improved reasoning, and instruction-following that rivals closed-source competitors.',
     essay: `Meta's Llama 4 is more than just an AI model — it's a statement about the future of artificial intelligence. In a landscape increasingly dominated by proprietary, closed-source models from OpenAI, Google, and Anthropic, Llama 4 stands as the most powerful argument that open-source AI can compete at the frontier.
 
 Released under Meta's permissive license, Llama 4 can be downloaded, fine-tuned, and deployed by anyone — from individual researchers to Fortune 500 companies. This openness has spawned an ecosystem of thousands of specialized variants, each fine-tuned for specific tasks, languages, or industries. The Llama community on Hugging Face alone hosts over ten thousand model variants, making it the most diverse and actively developed open-source AI family in existence.
@@ -177,7 +183,7 @@ Llama 4's architecture supports strong customization capabilities. Enterprises c
 The tradeoffs are real, however. Running Llama 4 at full scale requires significant GPU infrastructure, and the raw performance on general reasoning benchmarks still trails behind GPT-5.2 and Claude Opus 4.5. The model also requires more technical expertise to deploy and maintain than simply calling a cloud API.
 
 But for organizations that prioritize control, privacy, and customization — or for researchers pushing the boundaries of AI science — Llama 4 is not just an alternative to proprietary models. It's the foundation of a more open, more accessible AI future.`,
-    strengths: ['Fully open-source', 'Complete data privacy', 'Highly customizable', 'Massive community ecosystem', 'No API dependency'],
+    strengths: ['Fully open-source', 'Complete data privacy', 'Expanded context windows', 'Massive community ecosystem', 'Rivals closed-source quality'],
     weaknesses: ['Requires GPU infrastructure', 'Trails frontier closed models', 'More technical expertise needed'],
     pricing: 'Free — open-source',
     releaseYear: 2026,
@@ -267,21 +273,21 @@ Perplexity Pro isn't trying to be everything to everyone. It's trying to be the 
     providerSlug: 'github',
     category: ['coding'],
     tagline: 'Your AI pair programmer',
-    description: 'The most deeply integrated AI coding assistant with autonomous agents, multi-model support, and IDE-native experience.',
-    essay: `GitHub Copilot has evolved from a clever autocomplete tool into something far more ambitious: a genuine AI development partner that understands not just your code, but your entire development workflow. In 2026, Copilot isn't just suggesting lines of code — it's reasoning about architecture, managing pull requests, and autonomously implementing features.
+    description: 'The most powerful AI coding platform — autonomous coding agents, custom Agent Skills, parallel subagents, Claude Opus 4.6 integration, and multi-model flexibility.',
+    essay: `GitHub Copilot in February 2026 is unrecognizable from the autocomplete tool that launched in 2021. It has evolved into a full-blown autonomous development platform — one that can be assigned an issue, work independently to implement the fix, run tests, and submit a pull request for your review.
 
-The transformation of Copilot into an agent-based system is perhaps the most significant development in AI-assisted coding since the original Copilot launch. The Copilot Coding Agent can now be assigned GitHub issues and will autonomously produce multi-file changes, create branches, write tests, and submit pull requests for review. It's like having a junior developer who never sleeps, never gets bored, and processes feedback instantly.
+The Copilot Coding Agent is the headline feature. You can now assign GitHub issues directly to @copilot, and the agent will analyze your repository, work autonomously in an isolated GitHub Actions environment, implement features or fix bugs across multiple files, run your build and test suites, and open a production-ready pull request. It even iterates based on your PR review comments.
 
-What sets Copilot apart from standalone AI models is its unmatched IDE integration. In Visual Studio 2026 and VS Code, Copilot isn't a plugin — it's a native part of the development environment. It's accessible from the editor, the terminal, the debugger, the search bar, and the context menu. This deep integration means Copilot understands your project structure, your dependencies, your test framework, and your coding patterns in ways that a standalone chatbot never could.
+Agent Skills take this further by letting you define custom task-specific automation. Using structured folder definitions with a SKILL.md file, you can teach Copilot to handle repetitive tasks like code formatting, style enforcement, documentation generation, or any bespoke workflow specific to your team.
 
-The multi-model architecture is a strategic masterstroke. Copilot supports GPT-5.2, Claude Opus 4.5, and various specialized Codex models, allowing developers to choose the best model for each task. Need quick autocomplete? Use a fast, lightweight model. Working through a complex architectural decision? Switch to a frontier reasoning model. This flexibility means Copilot can optimize for both speed and depth.
+The addition of parallel subagents means multiple helper agents can run simultaneously on independent tasks — dramatically speeding up research, code review, and complex refactoring operations. Fine-grained tooling controls let you specify exactly which tools and repository permissions each subagent has.
 
-Copilot's code review capabilities have also matured dramatically. It can analyze pull requests, identify potential bugs, suggest optimizations, and even auto-generate PR summaries that capture the intent and impact of changes. For teams, this translates to faster, more thorough code reviews and more consistent code quality.
+Native integration with Claude Opus 4.6 brings Anthropic's benchmark-leading model directly into the Copilot ecosystem. Combined with GPT-5.3 Codex and specialized models, this multi-model architecture lets developers choose the optimal AI for each task without leaving their IDE.
 
-The Copilot CLI brings AI assistance to the terminal, allowing developers to ask questions, make code changes, and interact with GitHub directly from the command line. This rounds out a product that now covers every surface of the development workflow.
+Visual Studio 2026's Copilot Cloud Agent can handle UI cleanups, documentation updates, and multi-file refactors in the background while you focus on architecture and design decisions. Colorized code completions, partial acceptance of suggestions, and improved Markdown preview round out the editor experience.
 
-For any developer or team that uses GitHub — which is to say, virtually every developer and team — Copilot has become the AI assistant that's always there, always helpful, and increasingly essential.`,
-    strengths: ['Deepest IDE integration', 'Autonomous coding agent', 'Multi-model support', 'AI code review', 'CLI access'],
+GitHub Copilot is no longer a coding assistant — it's an AI-powered development team. For any developer using GitHub, it has become as essential as the code editor itself.`,
+    strengths: ['Autonomous Coding Agent', 'Custom Agent Skills', 'Parallel subagents', 'Claude Opus 4.6 + GPT-5.3 models', 'Full lifecycle automation'],
     weaknesses: ['GitHub ecosystem dependency', 'Subscription required', 'Agent still needs human review'],
     pricing: 'Free tier; Pro from $10/month; Enterprise available',
     releaseYear: 2021,
@@ -368,7 +374,7 @@ export const aiProviders: AIProvider[] = [
   {
     id: 'openai',
     name: 'OpenAI',
-    description: 'The company that started the AI revolution with ChatGPT, GPT-4, and now GPT-5.2.',
+    description: 'The company that started the AI revolution — now shipping GPT-5.3 Codex, the self-improving agentic coding model.',
     essay: `OpenAI remains the most influential AI company in the world, and for good reason. Founded in 2015 as a non-profit research lab, it has transformed into the company that brought artificial intelligence from academic curiosity to mainstream cultural phenomenon.
 
 The launch of ChatGPT in late 2022 was arguably the most significant technology product launch of the decade, introducing hundreds of millions of people to conversational AI for the first time. Since then, OpenAI has maintained its position at the frontier of AI capability, consistently pushing the boundaries with each new model release.
@@ -385,7 +391,7 @@ The company's approach to safety — while sometimes controversial — has helpe
   {
     id: 'anthropic',
     name: 'Anthropic',
-    description: 'Safety-focused AI lab building Claude, the thinking developer\'s AI model.',
+    description: 'Safety-focused AI lab building Claude Opus 4.6 — the benchmark-crushing agent team leader.',
     essay: `Anthropic has established itself as the AI industry's conscience — a company that proves you don't have to sacrifice capability for safety. Founded by former OpenAI researchers Dario and Daniela Amodei, Anthropic's mission is to build AI systems that are safe, beneficial, and understandable.
 
 The Claude model family is the embodiment of this philosophy. Claude Opus 4.5 regularly tops coding and reasoning benchmarks while maintaining the most consistently helpful, honest, and harmless outputs in the industry. This combination has made Claude the preferred model for professional developers, researchers, and enterprises in regulated industries.
@@ -436,7 +442,7 @@ In 2026, xAI's multi-agent architecture and financial reasoning capabilities hav
   {
     id: 'github',
     name: 'GitHub',
-    description: 'The world\'s largest code platform, powered by AI through GitHub Copilot.',
+    description: 'The world\'s largest code platform with autonomous AI coding agents, Agent Skills, and multi-model intelligence.',
     essay: `GitHub has transformed from the world's largest code hosting platform into the world's most AI-integrated development environment. With GitHub Copilot, the company has redefined what it means to write code, making AI assistance as natural and ubiquitous as syntax highlighting.
 
 The journey from Copilot's launch in 2021 — when it was a clever autocomplete tool — to the autonomous coding agent of 2026 represents one of the most remarkable product evolutions in technology history. Today's Copilot can understand entire codebases, autonomously implement features from issue descriptions, and submit production-ready pull requests complete with tests and documentation.

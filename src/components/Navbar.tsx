@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
 import { ThemeSwitcher } from './ThemeSwitcher';
 import { IntensitySlider } from './IntensitySlider';
+import { MotionSlider } from './MotionSlider';
 import { Bot, Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -15,6 +16,7 @@ export const Navbar: React.FC = () => {
     { to: '/', label: 'Home' },
     { to: '/models', label: 'AI Models' },
     { to: '/providers', label: 'Providers' },
+    { to: '/ai-guide', label: 'AI Guide' },
   ];
 
   const isActive = (path: string) => location.pathname === path;
@@ -46,13 +48,14 @@ export const Navbar: React.FC = () => {
           ))}
           <div className="ml-4 flex items-center gap-3">
             <IntensitySlider />
+            <MotionSlider />
             <ThemeSwitcher />
           </div>
         </div>
 
         {/* Mobile toggle */}
         <div className="flex md:hidden items-center gap-2">
-          <IntensitySlider />
+          <MotionSlider />
           <ThemeSwitcher />
           <button onClick={() => setMobileOpen(!mobileOpen)} className="p-2">
             {mobileOpen ? <X size={24} /> : <Menu size={24} />}

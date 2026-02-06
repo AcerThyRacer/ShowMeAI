@@ -2,24 +2,25 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useTheme } from '../context/ThemeContext';
+import { useThemeAnimations } from '../hooks/useThemeAnimations';
 import { Trophy, ArrowRight, Star } from 'lucide-react';
 
 const picks = [
   {
     rank: '🥇',
     title: 'Best Overall AI Model',
-    model: 'Claude Opus 4.5',
+    model: 'Claude Opus 4.6',
     modelId: 'claude-opus-4',
     provider: 'Anthropic',
-    reason: 'Claude Opus 4.5 is my #1 recommendation for 2026. It combines the deepest reasoning capabilities, the best coding performance, and the most reliable safety-aligned outputs of any model. Whether you\'re writing code, analyzing documents, or working through complex problems, Claude Opus delivers consistently thoughtful, accurate results. It thinks before it speaks — and that makes all the difference.',
+    reason: 'Claude Opus 4.6 is my #1 recommendation for February 2026. It dominated every major benchmark — 65.4% Terminal-Bench, 80.8% SWE-bench, 72.7% OSWorld. The 1M token context window processes entire codebases, and Agent Teams let multiple AIs collaborate on your project in parallel. It discovered 500+ previously unknown security vulnerabilities during testing. Nothing else comes close for serious knowledge work.',
   },
   {
     rank: '🥈',
     title: 'Best for Everyday Use',
-    model: 'GPT-5.2',
+    model: 'GPT-5.3 Codex',
     modelId: 'gpt-5',
     provider: 'OpenAI',
-    reason: 'GPT-5.2 is the Swiss Army knife of AI. Its 2M token context window is unmatched, its multimodal capabilities are the most mature, and it handles virtually any task you throw at it with impressive quality. If you could only use one AI model for everything, this would be the safest bet. It\'s slightly less precise than Claude for deep coding, but more versatile overall.',
+    reason: 'GPT-5.3 Codex is the most capable agentic coding model OpenAI has ever built — and the first AI that helped build itself. It\'s 25% faster, handles 400K tokens of context, and covers the full dev lifecycle from debugging to deployment to slide decks. If you want a single model that does everything and does it fast, this is it.',
   },
   {
     rank: '🥉',
@@ -27,7 +28,7 @@ const picks = [
     model: 'GitHub Copilot',
     modelId: 'github-copilot',
     provider: 'GitHub',
-    reason: 'For developers specifically, nothing beats having AI woven directly into your IDE. Copilot\'s autonomous coding agent, multi-model backend, and seamless GitHub integration make it the most practical AI tool for shipping code faster. It\'s not just a model — it\'s a complete development workflow upgrade.',
+    reason: 'For developers, nothing beats Copilot in 2026. The autonomous Coding Agent can be assigned GitHub issues and independently implements fixes, runs tests, and opens PRs. Agent Skills let you define custom workflows. Native Claude Opus 4.6 and GPT-5.3 integration means you get the best models right in your IDE. It\'s not just a tool — it\'s an AI development team.',
   },
   {
     rank: '🔍',
@@ -57,14 +58,16 @@ const picks = [
 
 export const PersonalPicks: React.FC = () => {
   const { theme } = useTheme();
+  const { containerVariants, getItemVariants } = useThemeAnimations();
 
   return (
-    <div className="py-20 px-8 relative z-10">
+    <div className="py-20 px-8 relative z-10 theme-section">
       <div className="max-w-6xl mx-auto">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
           className="text-center mb-16"
         >
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[var(--accent-color)]/10 border border-[var(--accent-color)]/30 text-[var(--accent-color)] text-sm font-medium mb-6">
@@ -82,14 +85,14 @@ export const PersonalPicks: React.FC = () => {
           {picks.map((pick, index) => (
             <motion.div
               key={pick.modelId}
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.08 }}
+              variants={getItemVariants(index)}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-50px" }}
             >
               <Link
                 to={`/models/${pick.modelId}`}
-                className="block p-6 md:p-8 rounded-2xl bg-[var(--secondary-color)]/70 backdrop-blur border border-[var(--accent-color)]/15 hover:border-[var(--accent-color)] transition-all group hover:shadow-lg hover:shadow-[var(--accent-color)]/10"
+                className="theme-card block p-6 md:p-8 rounded-2xl bg-[var(--secondary-color)]/70 backdrop-blur border border-[var(--accent-color)]/15 hover:border-[var(--accent-color)] transition-all group"
               >
                 <div className="flex flex-col md:flex-row md:items-start gap-4 md:gap-6">
                   <div className="flex items-center gap-3 md:flex-col md:items-center md:min-w-[100px]">
@@ -118,8 +121,9 @@ export const PersonalPicks: React.FC = () => {
 
         {/* Bottom CTA */}
         <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
           viewport={{ once: true }}
           className="text-center mt-12"
         >

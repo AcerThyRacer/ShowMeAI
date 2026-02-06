@@ -349,6 +349,153 @@ const HackerBackground: React.FC = () => {
   return <canvas ref={canvasRef} className="fixed inset-0 z-0 pointer-events-none opacity-30" />;
 };
 
+/* ─── Toxic: floating radioactive bubbles ─── */
+const ToxicBackground: React.FC = () => {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const iRef = useIntensityRef();
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const MAX = 60;
+    const bubbles: { x: number; y: number; r: number; baseSpeed: number; wobble: number; color: string }[] = [];
+    const colors = ['#b8ff00', '#9333ea', '#22c55e', '#a855f7', '#84cc16'];
+    for (let i = 0; i < MAX; i++) {
+      bubbles.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: Math.random() * 30 + 8,
+        baseSpeed: Math.random() * 0.4 + 0.1,
+        wobble: Math.random() * Math.PI * 2,
+        color: colors[Math.floor(Math.random() * colors.length)],
+      });
+    }
+
+    let animId: number;
+    let frame = 0;
+    const animate = () => {
+      const t = iRef.current / 100;
+      ctx.fillStyle = `rgba(10,10,10,${0.06 + (1 - t) * 0.1})`;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      const visible = Math.max(2, Math.floor(MAX * t));
+      frame++;
+      for (let i = 0; i < visible; i++) {
+        const b = bubbles[i];
+        b.y -= b.baseSpeed * (0.3 + t * 1.2);
+        b.x += Math.sin(b.wobble + frame * 0.01) * 0.5 * t;
+        if (b.y < -b.r * 2) { b.y = canvas.height + b.r; b.x = Math.random() * canvas.width; }
+
+        const drawR = b.r * (0.4 + t * 0.6);
+        ctx.beginPath();
+        ctx.arc(b.x, b.y, drawR, 0, Math.PI * 2);
+        ctx.fillStyle = b.color + '18';
+        ctx.fill();
+        ctx.strokeStyle = b.color + '55';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+
+        ctx.shadowBlur = 8 + t * 20;
+        ctx.shadowColor = b.color;
+        ctx.beginPath();
+        ctx.arc(b.x, b.y, drawR * 0.3, 0, Math.PI * 2);
+        ctx.fillStyle = b.color + '44';
+        ctx.fill();
+        ctx.shadowBlur = 0;
+      }
+
+      animId = requestAnimationFrame(animate);
+    };
+    animate();
+
+    const onResize = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; };
+    window.addEventListener('resize', onResize);
+    return () => { cancelAnimationFrame(animId); window.removeEventListener('resize', onResize); };
+  }, []);
+
+  return <canvas ref={canvasRef} className="fixed inset-0 z-0 pointer-events-none opacity-40" />;
+};
+
+/* ─── Candy: floating pastel shapes ─── */
+const CandyBackground: React.FC = () => {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const iRef = useIntensityRef();
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const MAX = 50;
+    const shapes: { x: number; y: number; size: number; baseSpeed: number; rotation: number; rotSpeed: number; sides: number; color: string }[] = [];
+    const colors = ['#ec4899', '#f472b6', '#a855f7', '#fb923c', '#facc15', '#34d399'];
+    for (let i = 0; i < MAX; i++) {
+      shapes.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        size: Math.random() * 18 + 6,
+        baseSpeed: Math.random() * 0.3 + 0.08,
+        rotation: Math.random() * Math.PI * 2,
+        rotSpeed: (Math.random() - 0.5) * 0.02,
+        sides: Math.floor(Math.random() * 4) + 3,
+        color: colors[Math.floor(Math.random() * colors.length)],
+      });
+    }
+
+    let animId: number;
+    const animate = () => {
+      const t = iRef.current / 100;
+      ctx.fillStyle = `rgba(253,242,248,${0.06 + (1 - t) * 0.12})`;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      const visible = Math.max(2, Math.floor(MAX * t));
+      for (let i = 0; i < visible; i++) {
+        const s = shapes[i];
+        s.y -= s.baseSpeed * (0.2 + t * 1.0);
+        s.rotation += s.rotSpeed * (0.3 + t * 1.5);
+        if (s.y < -s.size * 3) { s.y = canvas.height + s.size * 2; s.x = Math.random() * canvas.width; }
+
+        const drawSize = s.size * (0.4 + t * 0.6);
+        ctx.save();
+        ctx.translate(s.x, s.y);
+        ctx.rotate(s.rotation);
+        ctx.beginPath();
+        for (let j = 0; j < s.sides; j++) {
+          const angle = (j / s.sides) * Math.PI * 2 - Math.PI / 2;
+          if (j === 0) ctx.moveTo(Math.cos(angle) * drawSize, Math.sin(angle) * drawSize);
+          else ctx.lineTo(Math.cos(angle) * drawSize, Math.sin(angle) * drawSize);
+        }
+        ctx.closePath();
+        ctx.fillStyle = s.color + '22';
+        ctx.fill();
+        ctx.strokeStyle = s.color + '55';
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+        ctx.restore();
+      }
+
+      animId = requestAnimationFrame(animate);
+    };
+    animate();
+
+    const onResize = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; };
+    window.addEventListener('resize', onResize);
+    return () => { cancelAnimationFrame(animId); window.removeEventListener('resize', onResize); };
+  }, []);
+
+  return <canvas ref={canvasRef} className="fixed inset-0 z-0 pointer-events-none opacity-40" />;
+};
+
 export const ThemeBackground: React.FC = () => {
   const { theme } = useTheme();
 
@@ -358,6 +505,8 @@ export const ThemeBackground: React.FC = () => {
     case 'hacker': return <HackerBackground />;
     case 'light': return <LightBackground />;
     case 'dark': return <DarkBackground />;
+    case 'toxic': return <ToxicBackground />;
+    case 'candy': return <CandyBackground />;
     default: return <DarkBackground />;
   }
 };

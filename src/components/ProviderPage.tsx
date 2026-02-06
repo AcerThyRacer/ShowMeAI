@@ -2,12 +2,14 @@ import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useTheme } from '../context/ThemeContext';
+import { useThemeAnimations } from '../hooks/useThemeAnimations';
 import { aiProviders, aiModels } from '../data/models';
 import { ArrowLeft, ExternalLink, ChevronRight } from 'lucide-react';
 
 export const ProviderPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const { theme } = useTheme();
+  const { panelVariants } = useThemeAnimations();
   const provider = aiProviders.find((p) => p.id === id);
 
   if (!provider) {
@@ -35,7 +37,12 @@ export const ProviderPage: React.FC = () => {
           <span className="text-[var(--accent-color)]">{provider.name}</span>
         </div>
 
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
+        <motion.div 
+            variants={panelVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+        >
           {/* Header */}
           <div className="flex items-start gap-6 mb-8">
             <span className="text-6xl">{provider.icon}</span>

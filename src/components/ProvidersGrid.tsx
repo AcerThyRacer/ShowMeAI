@@ -2,18 +2,21 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useTheme } from '../context/ThemeContext';
+import { useThemeAnimations } from '../hooks/useThemeAnimations';
 import { aiProviders, aiModels } from '../data/models';
 import { ArrowRight } from 'lucide-react';
 
 export const ProvidersGrid: React.FC = () => {
   const { theme } = useTheme();
+  const { panelVariants, getItemVariants } = useThemeAnimations();
 
   return (
     <div className="min-h-screen pt-24 pb-16 px-6 relative">
       <div className="max-w-7xl mx-auto relative z-10">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
+          variants={panelVariants}
+          initial="hidden"
+          animate="visible"
           className="text-center mb-12"
         >
           <h1 className={`text-5xl font-bold mb-4 ${theme === 'hacker' ? 'font-mono' : ''}`}>
@@ -30,14 +33,14 @@ export const ProvidersGrid: React.FC = () => {
             return (
               <motion.div
                 key={provider.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.05 }}
+                variants={getItemVariants(index)}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: "-50px" }}
               >
                 <Link
                   to={`/providers/${provider.id}`}
-                  className="block h-full p-6 rounded-2xl bg-[var(--secondary-color)]/80 backdrop-blur border border-[var(--accent-color)]/20 hover:border-[var(--accent-color)] transition-all group hover:shadow-lg hover:shadow-[var(--accent-color)]/10 hover:-translate-y-1"
+                  className="theme-card block h-full p-6 rounded-2xl bg-[var(--secondary-color)]/80 backdrop-blur border border-[var(--accent-color)]/20 hover:border-[var(--accent-color)] transition-all group"
                 >
                   <div className="flex items-start gap-4 mb-4">
                     <span className="text-4xl">{provider.icon}</span>

@@ -1,7 +1,9 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { MessageSquare, Brain, Target, ShieldCheck, Layers, Cpu } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { MessageSquare, Brain, Target, ShieldCheck, Layers, Cpu, ArrowRight } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
+import { useThemeAnimations } from '../hooks/useThemeAnimations';
 
 const steps = [
   {
@@ -38,14 +40,16 @@ const steps = [
 
 export const AiGuide: React.FC = () => {
   const { theme } = useTheme();
+  const { getItemVariants, containerVariants } = useThemeAnimations();
 
   return (
-    <div id="guide" className="py-20 px-8 relative z-10">
+    <div id="guide" className="py-20 px-8 relative z-10 theme-section">
       <div className="max-w-6xl mx-auto">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
           className="text-center mb-16"
         >
           <h2 className={`text-4xl font-bold mb-4 ${theme === 'hacker' ? 'font-mono' : ''}`}>
@@ -60,12 +64,12 @@ export const AiGuide: React.FC = () => {
           {steps.map((step, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.08 }}
+              variants={getItemVariants(index)}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-50px" }}
               whileHover={{ y: -4 }}
-              className="p-6 rounded-2xl bg-[var(--secondary-color)] border border-[var(--accent-color)]/20 hover:border-[var(--accent-color)] transition-all group hover:shadow-lg hover:shadow-[var(--accent-color)]/10"
+              className="theme-card p-6 rounded-2xl bg-[var(--secondary-color)] border border-[var(--accent-color)]/20 hover:border-[var(--accent-color)] transition-all group"
             >
               <div className="p-3 rounded-lg bg-[var(--accent-color)]/10 text-[var(--accent-color)] group-hover:bg-[var(--accent-color)] group-hover:text-white transition-colors w-fit mb-4">
                 <step.icon size={28} />
@@ -75,6 +79,20 @@ export const AiGuide: React.FC = () => {
             </motion.div>
           ))}
         </div>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="text-center mt-12"
+        >
+          <Link
+            to="/ai-guide"
+            className="inline-flex items-center gap-2 px-8 py-4 bg-[var(--accent-color)] text-white rounded-full font-bold text-lg hover:brightness-110 transition-all shadow-lg shadow-[var(--accent-color)]/20"
+          >
+            Read the Full AI Mastery Guide <ArrowRight size={18} />
+          </Link>
+        </motion.div>
       </div>
     </div>
   );

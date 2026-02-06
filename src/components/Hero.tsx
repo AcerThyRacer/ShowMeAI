@@ -2,10 +2,12 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
+import { useThemeAnimations } from '../hooks/useThemeAnimations';
 import { Bot, Sparkles, BookOpen } from 'lucide-react';
 
 export const Hero: React.FC = () => {
   const { theme } = useTheme();
+  const { containerVariants } = useThemeAnimations();
 
   const getIconAnimation = () => {
     switch (theme) {
@@ -105,9 +107,10 @@ export const Hero: React.FC = () => {
     <div className="min-h-screen flex flex-col items-center justify-center p-8 pt-24 text-center relative overflow-hidden">
 
       <motion.div
-        initial={{ opacity: 0, y: 50 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        exit="exit"
         className="z-10 max-w-4xl"
       >
         <motion.div

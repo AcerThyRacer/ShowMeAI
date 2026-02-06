@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import { useTheme } from '../context/ThemeContext';
-import { Palette, Moon, Sun, Zap, Terminal, Music } from 'lucide-react';
+import { Palette, Moon, Sun, Zap, Terminal, Music, Skull, Candy } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const themes = [
-  { id: 'dark', name: 'Dark', icon: Moon, color: 'bg-slate-800' },
-  { id: 'light', name: 'Light', icon: Sun, color: 'bg-yellow-100 text-yellow-800' },
-  { id: 'rave', name: 'Rave', icon: Music, color: 'bg-pink-500' },
-  { id: 'neon', name: 'Neon', icon: Zap, color: 'bg-cyan-400' },
-  { id: 'hacker', name: 'Hacker', icon: Terminal, color: 'bg-green-600' },
+  { id: 'dark', name: 'Dark', icon: Moon },
+  { id: 'light', name: 'Light', icon: Sun },
+  { id: 'rave', name: 'Rave', icon: Music },
+  { id: 'neon', name: 'Neon', icon: Zap },
+  { id: 'hacker', name: 'Hacker', icon: Terminal },
+  { id: 'toxic', name: 'Toxic', icon: Skull },
+  { id: 'candy', name: 'Candy', icon: Candy },
 ];
 
 export const ThemeSwitcher: React.FC = () => {

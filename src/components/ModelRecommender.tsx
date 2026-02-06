@@ -3,34 +3,35 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Code, PenTool, Image as ImageIcon, Search, BarChart, ArrowRight } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
+import { useThemeAnimations } from '../hooks/useThemeAnimations';
 
 const tasks = [
   {
     id: 'coding',
     label: 'Coding & Dev',
     icon: Code,
-    bestModel: 'Claude Opus 4.5',
+    bestModel: 'Claude Opus 4.6',
     bestModelId: 'claude-opus-4',
-    alternatives: ['GPT-5.2', 'GitHub Copilot', 'DeepSeek V3'],
-    desc: "Unmatched in reasoning, code architecture, multi-file refactoring, and following complex instructions. Its 200K context window handles entire codebases with ease."
+    alternatives: ['GPT-5.3 Codex', 'GitHub Copilot', 'DeepSeek V3'],
+    desc: "The benchmark king — 65.4% Terminal-Bench, 80.8% SWE-bench, and a 1M token context that handles entire codebases. Agent Teams let multiple AIs collaborate on your project in parallel."
   },
   {
     id: 'creative',
     label: 'Creative Writing',
     icon: PenTool,
-    bestModel: 'GPT-5.2',
+    bestModel: 'GPT-5.3 Codex',
     bestModelId: 'gpt-5',
-    alternatives: ['Claude Opus 4.5', 'Gemini 3 Pro'],
-    desc: "The most versatile model for creative tasks with a 2M token context window. Offers exceptional prose, storytelling, and stylistic range across every genre."
+    alternatives: ['Claude Opus 4.6', 'Gemini 3 Pro'],
+    desc: "The self-improving agentic model that helped build itself. Its full-lifecycle capabilities extend to documentation, slide decks, and creative workflows beyond pure coding."
   },
   {
     id: 'reasoning',
     label: 'Logic & Math',
     icon: BarChart,
-    bestModel: 'Grok 4',
+    bestModel: 'Grok 4.1',
     bestModelId: 'grok-4',
-    alternatives: ['DeepSeek R1', 'GPT-5.2', 'Claude Opus 4.5'],
-    desc: "DeepChain multi-step reasoning achieves ~44.4% on Humanity's Last Exam — among the highest LLM scores ever. Purpose-built for complex logic and analysis."
+    alternatives: ['DeepSeek R1', 'GPT-5.3 Codex', 'Claude Opus 4.6'],
+    desc: "DeepChain multi-step reasoning with the Enterprise Heavy variant for complex analysis. Real-time X integration and human-like conversational intelligence."
   },
   {
     id: 'vision',
@@ -47,22 +48,24 @@ const tasks = [
     icon: Search,
     bestModel: 'Perplexity Pro',
     bestModelId: 'perplexity-pro',
-    alternatives: ['Gemini 3 Pro', 'Grok 4'],
+    alternatives: ['Gemini 3 Pro', 'Grok 4.1'],
     desc: "Real-time web search with verified inline citations. Uses multiple frontier models to synthesize accurate, source-linked answers for any research question."
   }
 ];
 
 export const ModelRecommender: React.FC = () => {
   const { theme } = useTheme();
+  const { containerVariants, panelVariants } = useThemeAnimations();
   const [selectedTask, setSelectedTask] = useState(tasks[0]);
 
   return (
-    <div className="py-20 px-8 bg-[var(--secondary-color)]/30 relative z-10">
+    <div className="py-20 px-8 bg-[var(--secondary-color)]/30 relative z-10 theme-section">
       <div className="max-w-6xl mx-auto">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
           className="text-center mb-16"
         >
           <h2 className={`text-4xl font-bold mb-4 ${theme === 'hacker' ? 'font-mono' : ''}`}>
@@ -95,10 +98,10 @@ export const ModelRecommender: React.FC = () => {
             <AnimatePresence mode="wait">
               <motion.div
                 key={selectedTask.id}
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
-                transition={{ duration: 0.3 }}
+                variants={panelVariants}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
                 className="h-full bg-[var(--bg-color)] p-8 rounded-2xl border-2 border-[var(--accent-color)] shadow-2xl relative overflow-hidden"
               >
                 <div className="relative z-10">
@@ -139,10 +142,11 @@ export const ModelRecommender: React.FC = () => {
 
         {/* CTA to see all models */}
         <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          className="text-center mt-12"
+           variants={containerVariants}
+           initial="hidden"
+           whileInView="visible"
+           viewport={{ once: true }}
+           className="text-center mt-12"
         >
           <Link
             to="/models"
