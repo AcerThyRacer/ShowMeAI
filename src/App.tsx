@@ -37,6 +37,7 @@ const ComparisonMatrix = lazy(() => import('./components/ComparisonMatrix').then
 const ModelWizard = lazy(() => import('./components/ModelWizard').then(m => ({ default: m.ModelWizard })));
 const PricingCalculator = lazy(() => import('./components/PricingCalculator').then(m => ({ default: m.PricingCalculator })));
 const ThemeCustomizer = lazy(() => import('./components/ThemeCustomizer').then(m => ({ default: m.ThemeCustomizer })));
+const AIBattle = lazy(() => import('./components/AIBattle').then(m => ({ default: m.AIBattle })));
 const NotFound = lazy(() => import('./components/NotFound').then(m => ({ default: m.NotFound })));
 
 function HomePage() {
@@ -74,6 +75,7 @@ function AnimatedRoutes() {
           <Route path="/wizard" element={<ModelWizard />} />
           <Route path="/pricing" element={<PricingCalculator />} />
           <Route path="/customize" element={<ThemeCustomizer />} />
+          <Route path="/battle" element={<><SEO title="AI Response Battle" description="Compare how different AIs respond to the same prompt — side by side with simulated responses." path="/battle" /><AIBattle /></>} />
           <Route path="*" element={<><SEO title="Page Not Found" description="The page you're looking for doesn't exist." /><NotFound /></>} />
         </Routes>
       </Suspense>

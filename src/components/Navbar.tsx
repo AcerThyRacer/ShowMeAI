@@ -25,6 +25,7 @@ export const Navbar: React.FC = () => {
     { to: '/pricing', label: 'Pricing' },
     { to: '/search', label: 'Search' },
     { to: '/wizard', label: 'Wizard' },
+    { to: '/battle', label: '⚔️ Battle' },
     { to: '/customize', label: '🎨 Customize' },
   ];
 
@@ -46,11 +47,10 @@ export const Navbar: React.FC = () => {
             <Link
               key={link.to}
               to={link.to}
-              className={`px-3 py-1.5 rounded-lg text-[13px] font-medium transition-all whitespace-nowrap ${
-                isActive(link.to)
+              className={`px-3 py-1.5 rounded-lg text-[13px] font-medium transition-all whitespace-nowrap ${isActive(link.to)
                   ? 'bg-[var(--accent-color)] text-white shadow-sm shadow-[var(--accent-color)]/25'
                   : 'hover:bg-[var(--secondary-color)] opacity-70 hover:opacity-100'
-              }`}
+                }`}
             >
               {link.label}
             </Link>
@@ -97,9 +97,8 @@ export const Navbar: React.FC = () => {
                 key={link.to}
                 to={link.to}
                 onClick={() => setMobileOpen(false)}
-                className={`block px-6 py-3 text-sm font-medium transition-colors ${
-                  isActive(link.to) ? 'bg-[var(--accent-color)] text-white' : 'hover:bg-[var(--secondary-color)]'
-                }`}
+                className={`block px-6 py-3 text-sm font-medium transition-colors ${isActive(link.to) ? 'bg-[var(--accent-color)] text-white' : 'hover:bg-[var(--secondary-color)]'
+                  }`}
               >
                 {link.label}
               </Link>

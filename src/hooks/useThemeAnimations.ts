@@ -301,33 +301,88 @@ const motionMap: Record<string, () => ThemeMotion> = {
 };
 
 export function useThemeAnimations() {
-  const { theme, motionLevel } = useTheme();
+  const { theme, motionLevel, intensity } = useTheme();
   const m = (motionMap[theme] ?? darkMotion)();
 
   // Scale animation properties by motionLevel (0 = no animations, 100 = full)
   const t = motionLevel / 100; // 0..1
+  const iScale = intensity / 100; // 0..1 — intensity adds extra flair
 
   const containerVariants = t < 0.05
     ? { hidden: { opacity: 1 }, visible: { opacity: 1 } }
-    : m.container;
+    : (() => {
+      const base = { ...m.container };
+      // At high motion, amplify the container entrance
+      if (t > 0.7 && base.hidden && base.visible) {
+        const hidden = base.hidden as Record<string, unknown>;
+        const visible = base.visible as Record<string, unknown>;
+        // Add scale punch at high motion
+        if (hidden.y !== undefined) {
+          hidden.y = (hidden.y as number) * (1 + t * 0.5);
+        }
+        // Extra bounce via spring at very high motion
+        if (t > 0.85 && visible.transition) {
+          const trans = visible.transition as Record<string, unknown>;
+          if (trans.duration) {
+            // Convert to spring for extra bounce
+            visible.transition = {
+              type: 'spring',
+              stiffness: 200 + t * 150,
+              damping: 15 + (1 - t) * 10,
+            };
+          }
+        }
+      }
+      return base;
+    })();
 
   const panelVariants = t < 0.05
     ? { hidden: { opacity: 1 }, visible: { opacity: 1 }, exit: { opacity: 0, transition: { duration: 0.1 } } }
-    : m.panel;
+    : (() => {
+      const base = { ...m.panel };
+      if (t > 0.5 && base.hidden && base.visible) {
+        const hidden = base.hidden as Record<string, unknown>;
+        // Add rotation at high motion for extra drama
+        if (t > 0.7) {
+          const rotateAmount = (t - 0.7) * 5; // up to 1.5deg at max
+          hidden.rotate = -(rotateAmount * (iScale * 0.5 + 0.5));
+          hidden.skewX = -(rotateAmount * 0.3);
+        }
+        // Amplify scale shrink at high motion
+        if (hidden.scale !== undefined) {
+          const baseScale = hidden.scale as number;
+          hidden.scale = baseScale - (t - 0.5) * 0.05; // slightly smaller
+        }
+      }
+      return base;
+    })();
 
   /** Grid items — ALWAYS uses simple opacity + y so whileInView never fails.
-   *  At high motionLevel, y-offset and stagger increase for more dramatic effect. */
+   *  At high motionLevel, y-offset and stagger increase for more dramatic effect.
+   *  At high intensity, adds subtle rotation and scale effects. */
   const getItemVariants = (index: number = 0): Variants => {
     if (t < 0.05) return { hidden: { opacity: 1 }, visible: { opacity: 1 } };
     const yMax = m.itemYMax ?? 24;
     const yOffset = yMax * t;                         // bigger at high motion
     const delay = index * m.staggerStep * t;          // wider stagger at high
     const durationScale = 0.6 + t * 0.4;             // animations last longer at high
+
+    // Intensity adds extra rotation and scale
+    const rotateOffset = iScale > 0.3 ? (index % 2 === 0 ? 1 : -1) * iScale * 3 * t : 0;
+    const scaleStart = iScale > 0.5 ? 1 - iScale * 0.08 * t : 1;
+
     return {
-      hidden: { opacity: 0, y: yOffset },
+      hidden: {
+        opacity: 0,
+        y: yOffset,
+        ...(rotateOffset !== 0 ? { rotate: rotateOffset } : {}),
+        ...(scaleStart < 1 ? { scale: scaleStart } : {}),
+      },
       visible: {
         opacity: 1,
         y: 0,
+        rotate: 0,
+        scale: 1,
         transition: {
           ...m.childTransition,
           delay,

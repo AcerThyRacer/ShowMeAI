@@ -45,7 +45,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   const setTheme = useCallback((t: Theme) => {
     setThemeState(t);
-    try { localStorage.setItem('ai-theme', JSON.stringify(t)); } catch {}
+    try { localStorage.setItem('ai-theme', JSON.stringify(t)); } catch { }
   }, []);
 
   const transitionTheme = useCallback((t: Theme) => {
@@ -58,11 +58,11 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   const setIntensity = useCallback((v: number) => {
     setIntensityState(v);
-    try { localStorage.setItem('ai-intensity', JSON.stringify(v)); } catch {}
+    try { localStorage.setItem('ai-intensity', JSON.stringify(v)); } catch { }
   }, []);
   const setMotionLevel = useCallback((v: number) => {
     setMotionLevelState(v);
-    try { localStorage.setItem('ai-motion', JSON.stringify(v)); } catch {}
+    try { localStorage.setItem('ai-motion', JSON.stringify(v)); } catch { }
   }, []);
 
   useEffect(() => {
@@ -82,10 +82,15 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     root.style.setProperty('--motion-opacity', t.toFixed(3));
   }, [motionLevel]);
 
-  // Expose intensity as CSS custom property
+  // Expose intensity as CSS custom properties
   useEffect(() => {
     const root = document.documentElement;
-    root.style.setProperty('--intensity-scale', (intensity / 100).toFixed(3));
+    const t = intensity / 100;
+    root.style.setProperty('--intensity-scale', t.toFixed(3));
+    root.style.setProperty('--intensity-glow', `${(t * 25).toFixed(1)}px`);
+    root.style.setProperty('--intensity-speed', `${(5 - t * 4).toFixed(2)}s`);
+    root.style.setProperty('--intensity-play', t < 0.05 ? 'paused' : 'running');
+    root.style.setProperty('--intensity-opacity', t.toFixed(3));
   }, [intensity]);
 
   // Check prefers-reduced-motion on mount
