@@ -4,23 +4,23 @@ import { Palette, Moon, Sun, Zap, Terminal, Music, Skull, Candy, Cpu, Waves, Sun
 import { motion, AnimatePresence } from 'framer-motion';
 
 const themes = [
-  { id: 'dark',       name: 'Dark',       icon: Moon,     colors: ['#0f172a', '#3b82f6', '#1e293b'] },
-  { id: 'light',      name: 'Light',      icon: Sun,      colors: ['#f8fafc', '#2563eb', '#e2e8f0'] },
-  { id: 'rave',       name: 'Rave',       icon: Music,    colors: ['#000000', '#ff00ff', '#00ffff'] },
-  { id: 'neon',       name: 'Neon',       icon: Zap,      colors: ['#09090b', '#d946ef', '#00ffcc'] },
-  { id: 'hacker',     name: 'Hacker',     icon: Terminal,  colors: ['#000000', '#008f11', '#00ff00'] },
-  { id: 'toxic',      name: 'Toxic',      icon: Skull,    colors: ['#0a0a0a', '#9333ea', '#b8ff00'] },
-      { id: 'candy',      name: 'Candy',      icon: Candy,    colors: ['#1a0a1e', '#f472b6', '#a855f7'] },
-  
-  { id: 'cyberpunk',  name: 'Cyberpunk',  icon: Cpu,      colors: ['#0c0a1a', '#ff6b2b', '#00f0ff'] },
-  { id: 'ocean',      name: 'Ocean',      icon: Waves,    colors: ['#0a192f', '#0ea5e9', '#06b6d4'] },
-  { id: 'sunset',     name: 'Sunset',     icon: Sunset,   colors: ['#1a0a00', '#f97316', '#a855f7'] },
-  { id: 'retro',      name: 'Retro',      icon: Radio,    colors: ['#1a0025', '#ff2975', '#00f0ff'] },
-  { id: 'minimalist', name: 'Minimal',    icon: Type,         colors: ['#fafafa', '#18181b', '#a1a1aa'] },
-  { id: 'forest',     name: 'Forest',     icon: TreePine,     colors: ['#0b1a0f', '#22c55e', '#132a18'] },
-  { id: 'monochrome', name: 'Mono',       icon: Circle,       colors: ['#0a0a0a', '#ffffff', '#171717'] },
-  { id: 'synthwavex', name: 'Synthwave X',icon: AudioLines,   colors: ['#0d001a', '#01cdfe', '#ff71ce'] },
-  { id: 'seasonal',   name: 'Seasonal',   icon: CalendarDays, colors: ['#0f0a1a', '#a855f7', '#f472b6'] },
+  { id: 'dark', name: 'Dark', icon: Moon, colors: ['#0f172a', '#3b82f6', '#1e293b'] },
+  { id: 'light', name: 'Light', icon: Sun, colors: ['#f8fafc', '#2563eb', '#e2e8f0'] },
+  { id: 'rave', name: 'Rave', icon: Music, colors: ['#000000', '#ff00ff', '#00ffff'] },
+  { id: 'neon', name: 'Neon', icon: Zap, colors: ['#09090b', '#d946ef', '#00ffcc'] },
+  { id: 'hacker', name: 'Hacker', icon: Terminal, colors: ['#000000', '#008f11', '#00ff00'] },
+  { id: 'toxic', name: 'Toxic', icon: Skull, colors: ['#0a0a0a', '#9333ea', '#b8ff00'] },
+  { id: 'candy', name: 'Candy', icon: Candy, colors: ['#1a0a1e', '#f472b6', '#a855f7'] },
+
+  { id: 'cyberpunk', name: 'Cyberpunk', icon: Cpu, colors: ['#0c0a1a', '#ff6b2b', '#00f0ff'] },
+  { id: 'ocean', name: 'Ocean', icon: Waves, colors: ['#0a192f', '#0ea5e9', '#06b6d4'] },
+  { id: 'sunset', name: 'Sunset', icon: Sunset, colors: ['#1a0a00', '#f97316', '#a855f7'] },
+  { id: 'retro', name: 'Retro', icon: Radio, colors: ['#1a0025', '#ff2975', '#00f0ff'] },
+  { id: 'minimalist', name: 'Minimal', icon: Type, colors: ['#fafafa', '#18181b', '#a1a1aa'] },
+  { id: 'forest', name: 'Forest', icon: TreePine, colors: ['#0b1a0f', '#22c55e', '#132a18'] },
+  { id: 'monochrome', name: 'Mono', icon: Circle, colors: ['#0a0a0a', '#ffffff', '#171717'] },
+  { id: 'synthwavex', name: 'Synthwave X', icon: AudioLines, colors: ['#0d001a', '#01cdfe', '#ff71ce'] },
+  { id: 'seasonal', name: 'Seasonal', icon: CalendarDays, colors: ['#0f0a1a', '#a855f7', '#f472b6'] },
 ];
 
 export const ThemeSwitcher: React.FC = () => {
@@ -55,10 +55,10 @@ export const ThemeSwitcher: React.FC = () => {
     <div className="relative" ref={dropdownRef}>
       <button
         onClick={toggleOpen}
-        className="w-10 h-10 rounded-full shadow-lg flex items-center justify-center transition-transform hover:scale-110 focus:outline-none ring-2 ring-[var(--accent-color)]/30 bg-[var(--secondary-color)] text-[var(--text-color)]"
+        className="w-10 h-10 rounded-full shadow-lg flex items-center justify-center transition-transform hover:scale-110 focus:outline-none border-2 border-[var(--accent-color)]/30 bg-[var(--secondary-color)] text-[var(--text-color)]"
         aria-label="Change Theme"
       >
-        <Palette size={20} />
+        <Palette size={18} />
       </button>
 
       <AnimatePresence>
@@ -81,11 +81,10 @@ export const ThemeSwitcher: React.FC = () => {
                   }}
                   aria-label={`Switch to ${t.name} theme`}
                   aria-pressed={theme === t.id}
-                  className={`flex items-center gap-3 px-3 py-2 rounded-lg transition-colors text-sm group ${
-                    theme === t.id
+                  className={`flex items-center gap-3 px-3 py-2 rounded-lg transition-colors text-sm group ${theme === t.id
                       ? 'bg-[var(--accent-color)] text-white'
                       : 'text-[var(--text-color)] hover:bg-[var(--accent-color)]/20'
-                  }`}
+                    }`}
                 >
                   <t.icon size={16} />
                   <span className="font-medium flex-1 text-left">{t.name}</span>

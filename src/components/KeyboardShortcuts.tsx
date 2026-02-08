@@ -70,28 +70,26 @@ export const KeyboardShortcuts: React.FC = () => {
     return () => window.removeEventListener('keydown', handler);
   }, [cycleTheme]);
 
+  // Listen for navbar button click
+  useEffect(() => {
+    const handleToggle = () => setShowHelp(prev => !prev);
+    window.addEventListener('toggle-shortcuts', handleToggle);
+    return () => window.removeEventListener('toggle-shortcuts', handleToggle);
+  }, []);
+
   const searchResults = searchQuery.trim().length > 0
     ? [
-        ...aiModels
-          .filter(m => m.name.toLowerCase().includes(searchQuery.toLowerCase()) || m.tagline.toLowerCase().includes(searchQuery.toLowerCase()))
-          .map(m => ({ type: 'model' as const, id: m.id, name: m.name, icon: m.icon, sub: m.tagline, path: `/models/${m.id}` })),
-        ...aiProviders
-          .filter(p => p.name.toLowerCase().includes(searchQuery.toLowerCase()))
-          .map(p => ({ type: 'provider' as const, id: p.id, name: p.name, icon: p.icon, sub: p.description, path: `/providers/${p.id}` })),
-      ].slice(0, 8)
+      ...aiModels
+        .filter(m => m.name.toLowerCase().includes(searchQuery.toLowerCase()) || m.tagline.toLowerCase().includes(searchQuery.toLowerCase()))
+        .map(m => ({ type: 'model' as const, id: m.id, name: m.name, icon: m.icon, sub: m.tagline, path: `/models/${m.id}` })),
+      ...aiProviders
+        .filter(p => p.name.toLowerCase().includes(searchQuery.toLowerCase()))
+        .map(p => ({ type: 'provider' as const, id: p.id, name: p.name, icon: p.icon, sub: p.description, path: `/providers/${p.id}` })),
+    ].slice(0, 8)
     : [];
 
   return (
     <>
-      {/* Shortcuts help button */}
-      <button
-        onClick={() => setShowHelp(true)}
-        className="fixed bottom-6 left-6 z-50 w-10 h-10 rounded-full bg-[var(--secondary-color)] border border-[var(--accent-color)]/20 flex items-center justify-center hover:border-[var(--accent-color)] transition-all shadow-lg"
-        aria-label="Keyboard shortcuts"
-      >
-        <Keyboard size={18} className="opacity-60" />
-      </button>
-
       {/* Shortcuts Help Modal */}
       <AnimatePresence>
         {showHelp && (

@@ -96,7 +96,6 @@ function App() {
                   <ScrollToTop />
                   <ScrollProgressBar />
                   <Navbar />
-                  <KeyboardShortcuts />
                   <div className="relative z-10">
                     <AnimatedRoutes />
                     <footer className="py-8 text-center opacity-50 text-sm">
@@ -105,6 +104,7 @@ function App() {
                   </div>
                   <ComparisonBar />
                 </div>
+                <KeyboardShortcuts />
               </ComparisonProvider>
             </FavoritesProvider>
           </ToastProvider>

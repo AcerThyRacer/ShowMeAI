@@ -3,6 +3,8 @@
 @import '@fontsource/inter/700.css';
 @import '@fontsource/jetbrains-mono/400.css';
 @import '@fontsource/jetbrains-mono/700.css';
+@import '@fontsource/orbitron/400.css';
+@import '@fontsource/orbitron/700.css';
 
 @tailwind base;
 @tailwind components;
@@ -75,8 +77,8 @@ body {
   --text-color: #ffff00;
   --accent-color: #ff00ff;
   --secondary-color: #1a1a1a;
-  font-family: 'Comic Sans MS', 'Chalkboard SE', sans-serif;
-  /* Fun font for rave */
+  font-family: 'Orbitron', 'Inter', system-ui, sans-serif;
+  /* Futuristic geometric font for rave */
 }
 
 /* Neon Theme */
@@ -207,7 +209,7 @@ body {
 }
 
 .theme-rave body {
-  font-family: 'Comic Sans MS', 'Chalkboard SE', sans-serif;
+  font-family: 'Orbitron', 'Inter', system-ui, sans-serif;
 }
 
 @layer utilities {
@@ -217,6 +219,15 @@ body {
 
   .neon-glow {
     box-shadow: 0 0 10px var(--accent-color), 0 0 20px var(--accent-color);
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
   }
 }
 
