@@ -1,3 +1,42 @@
+<div align="center">
+
+# 🌐 THE WEBSITE IS NOW LIVE! 🌐
+
+<br>
+
+<a href="https://showmeai.dev/">
+  <img src="https://img.shields.io/badge/🚀_VISIT_SHOWMEAI-showmeai.dev-00d4ff?style=for-the-badge&labelColor=0a0a0a&logo=googlechrome&logoColor=white" alt="Visit ShowMeAI" height="50"/>
+</a>
+
+<br><br>
+
+### 🔗 **[https://showmeai.dev/](https://showmeai.dev/)**
+
+> **The definitive interactive guide to AI in 2026 is live and accessible worldwide.**
+> No installation needed — just click the link above and explore!
+
+</div>
+
+---
+
+## ⚡ Quick Install (Run Locally)
+
+Want to run the site locally? Use these **one-liner** commands:
+
+**🪟 Windows (PowerShell):**
+```powershell
+git clone https://github.com/AcerThyRacer/ShowMeAI.git && cd ShowMeAI && npm install && npm run dev
+```
+
+**🐧 Linux / macOS (Bash):**
+```bash
+git clone https://github.com/AcerThyRacer/ShowMeAI.git && cd ShowMeAI && npm install && npm run dev
+```
+
+> After running, open **http://localhost:5173** in your browser.
+
+---
+
 # ShowMeAI - AI Masterclass 2026
 
 <div align="center">
@@ -10,7 +49,7 @@
 [![Tailwind](https://img.shields.io/badge/Tailwind-3.4-38bdf8?logo=tailwind-css)](https://tailwindcss.com/)
 [![Framer Motion](https://img.shields.io/badge/Framer_Motion-12.33-ff69b4)](https://www.framer.com/motion/)
 
-[Live Demo](https://showmeai.vercel.app) · [Features](#-key-features) · [Roadmap](ROADMAP_2026.md)
+[Live Site](https://showmeai.dev) · [Features](#-key-features) · [Roadmap](ROADMAP_2026.md)
 
 </div>
 
